@@ -1,0 +1,73 @@
+<p>
+  Listado de Niñ@s
+</p>
+<!--Elegant-->
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>
+        <button type="button" class="btn  mb-2 btn-sm  special-color-dark waves-light" data-toggle="modal" data-target="#basicExample" (click)="demoBasic.show()" mdbWavesEffect>
+          <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar</button>
+      </th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Genero</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Pablo</td>
+      <td>Jiménez</td>
+      <td>Masculino</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jostyn</td>
+      <td>Riofrío</td>
+      <td>Masculino</td>
+    </tr>
+  </tbody>
+</table>
+
+<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header special-color-dark darken-3 white-text">
+                <h4 class="title"><i class="fa fa-pencil"></i> Resgitro Niñ@</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="demoBasic.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <div class="modal-body mb-0">
+                        <div class="md-form form-sm">
+                            <i class="fa fa-envelope prefix"></i>
+                            <input mdbInputDirective type="text" id="form19" class="form-control">
+                            <label for="form19">Nombre</label>
+                        </div>
+        
+                        <div class="md-form form-sm">
+                            <i class="fa fa-lock prefix"></i>
+                            <input mdbInputDirective type="password" id="form20" class="form-control">
+                            <label for="form20">Correo</label>
+                        </div>
+        
+                        <div class="md-form form-sm">
+                            <i class="fa fa-tag prefix"></i>
+                            <input mdbInputDirective type="text" id="form21" class="form-control">
+                            <label for="form21">Fecha nacimiento</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect>Crear</button>
+                <button type="button" class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="demoBasic.hide()" mdbWavesEffect>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+                

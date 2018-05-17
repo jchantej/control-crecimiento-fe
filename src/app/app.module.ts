@@ -3,11 +3,13 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
+import { PersonaComponent } from './persona/persona.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PersonaComponent
   ],
   imports: [
     BrowserModule,
