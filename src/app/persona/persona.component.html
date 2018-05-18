@@ -1,73 +1,94 @@
 <p>
-  Listado de Niñ@s
+    Listado de Niñ@s
 </p>
 <!--Elegant-->
 
 <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>
-        <button type="button" class="btn  mb-2 btn-sm  special-color-dark waves-light" data-toggle="modal" data-target="#basicExample" (click)="demoBasic.show()" mdbWavesEffect>
-          <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar</button>
-      </th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Genero</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Pablo</td>
-      <td>Jiménez</td>
-      <td>Masculino</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jostyn</td>
-      <td>Riofrío</td>
-      <td>Masculino</td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th>
+                <button type="button" class="btn  mb-2 btn-sm  special-color-dark waves-light" data-toggle="modal" data-target="#cPersonaModal"
+                    (click)="cPersonaModal.show()" mdbWavesEffect>
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar</button>
+            </th>
+            <th>foto</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let persona of personas'>
+            <td>{{persona.id}}</td>
+            <td>{{persona.foto}}</td>
+            <td>{{persona.nombre}}</td>
+            <td>{{persona.apellido}}</td>
+            <td>
+                <button type="button" class="btn mb-2 btn-sm  btn-default btn-rounded waves-light" mdbWavesEffect>
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn mb-2 btn-sm  btn-primary btn-rounded waves-light" mdbWavesEffect>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn mb-2 btn-sm  btn-danger  btn-rounded waves-light" mdbWavesEffect>
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>
+
 </table>
 
-<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #cPersonaModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
-        <div class="modal-content">
-            <div class="modal-header special-color-dark darken-3 white-text">
-                <h4 class="title"><i class="fa fa-pencil"></i> Resgitro Niñ@</h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="demoBasic.hide()">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-inline">
+        <form [formGroup]="registerForm" class="form-inline">
+            <div class="modal-content">
+                <div class="modal-header special-color-dark darken-3 white-text">
+                    <h4 class="title">
+                        <i class="fa fa-pencil"></i> Resgitro Niñ@</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="cPersonaModal.hide()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
                     <div class="modal-body mb-0">
                         <div class="md-form form-sm">
                             <i class="fa fa-envelope prefix"></i>
-                            <input mdbInputDirective type="text" id="form19" class="form-control">
-                            <label for="form19">Nombre</label>
+                            <input mdbInputDirective type="text" formControlName="txtNombre" id="txtNombre" class="form-control">
+                            <label for="txtNombre">Nombre</label>
                         </div>
-        
+
                         <div class="md-form form-sm">
                             <i class="fa fa-lock prefix"></i>
-                            <input mdbInputDirective type="password" id="form20" class="form-control">
-                            <label for="form20">Correo</label>
+                            <input mdbInputDirective type="text" formControlName="txtApellido" id="txtApellido" class="form-control">
+                            <label for="txtApellido">Apellido</label>
                         </div>
-        
+
+                        <div class="md-form form-sm">
+                            <i class="fa fa-lock prefix"></i>
+                            <input mdbInputDirective type="text" formControlName="dtpFechaNacimiento" id="dtpFechaNacimiento" class="form-control">
+                            <label for="dtpFechaNacimiento">Fecha nacimiento</label>
+                        </div>
+
                         <div class="md-form form-sm">
                             <i class="fa fa-tag prefix"></i>
-                            <input mdbInputDirective type="text" id="form21" class="form-control">
-                            <label for="form21">Fecha nacimiento</label>
+                            <input mdbInputDirective type="text" formControlName="txtGenero" id="txtGenero" class="form-control">
+                            <label for="txtGenero">Genero</label>
                         </div>
                     </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center">
+                        <input class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect value="Crear">
+                        <input class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="demoBasic.hide()" mdbWavesEffect value="Cancelar">
+                    </div>
+                    <button type="button" class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect (click)="onSubmit()" >Crear</button>
+                    <button type="button" class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="cPersonaModal.hide()" mdbWavesEffect>Cancelar</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect>Crear</button>
-                <button type="button" class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="demoBasic.hide()" mdbWavesEffect>Cancelar</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
-                
