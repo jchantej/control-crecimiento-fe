@@ -14,6 +14,7 @@
             <th>foto</th>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>Fecha Nacimiento</th>
             <th>Acciones</th>
 
         </tr>
@@ -24,6 +25,7 @@
             <td>{{persona.foto}}</td>
             <td>{{persona.nombre}}</td>
             <td>{{persona.apellido}}</td>
+            <td>{{persona.fechaNacimiento | date: 'dd/MM/yyyy'}}</td>
             <td>
                 <button type="button" class="btn mb-2 btn-sm  btn-default btn-rounded waves-light" mdbWavesEffect>
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -42,7 +44,7 @@
 <div mdbModal #cPersonaModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
-        <form [formGroup]="registerForm" class="form-inline">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-inline">
             <div class="modal-content">
                 <div class="modal-header special-color-dark darken-3 white-text">
                     <h4 class="title">
@@ -57,35 +59,33 @@
                     <div class="modal-body mb-0">
                         <div class="md-form form-sm">
                             <i class="fa fa-envelope prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="txtNombre" id="txtNombre" class="form-control">
-                            <label for="txtNombre">Nombre</label>
+                            <input mdbInputDirective type="text" formControlName='nombre' class="form-control">
+                            <label for="nombre">Nombre</label>
                         </div>
 
                         <div class="md-form form-sm">
                             <i class="fa fa-lock prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="txtApellido" id="txtApellido" class="form-control">
-                            <label for="txtApellido">Apellido</label>
+                            <input mdbInputDirective type="text" formControlName="apellido" class="form-control">
+                            <label for="nombre">Apellido</label>
                         </div>
 
                         <div class="md-form form-sm">
                             <i class="fa fa-lock prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="dtpFechaNacimiento" id="dtpFechaNacimiento" class="form-control">
-                            <label for="dtpFechaNacimiento">Fecha nacimiento</label>
+                            <input mdbInputDirective type="text" formControlName="fechaNacimiento" class="form-control">
+
+                            <input id="meeting" type="date" formControlName="fechaNacimiento" class="form-control"/>
+                            <label for="fechaNacimiento">Fecha nacimiento</label>
                         </div>
 
                         <div class="md-form form-sm">
                             <i class="fa fa-tag prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="txtGenero" id="txtGenero" class="form-control">
-                            <label for="txtGenero">Genero</label>
+                            <input mdbInputDirective type="text" formControlName="genero" class="form-control">
+                            <label for="genero">Genero</label>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="text-center">
-                        <input class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect value="Crear">
-                        <input class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="demoBasic.hide()" mdbWavesEffect value="Cancelar">
-                    </div>
-                    <button type="button" class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect (click)="onSubmit()" >Crear</button>
+                <div class="modal-footer text-center">
+                    <button type="submit" class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect>Crear</button>
                     <button type="button" class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="cPersonaModal.hide()" mdbWavesEffect>Cancelar</button>
                 </div>
             </div>

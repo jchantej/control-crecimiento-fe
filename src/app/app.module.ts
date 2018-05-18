@@ -9,7 +9,7 @@ import { PersonaService } from '../app/persona/persona.service';
 @NgModule({
   declarations: [
     AppComponent,
-    PersonaComponent
+    PersonaComponent,
   ],
   imports: [
     BrowserModule,

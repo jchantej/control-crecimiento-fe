@@ -9,8 +9,8 @@ export class PersonaService {
   constructor() {
     this.personas = [
       {
-        id: 1, nombre: 'Pablo Antonio', apellido: 'Jimenez', fechaNacimiento: new Date('20/03/2014'),
-        genero: 'M', grupoSanguineo: 'ORH+', foto: 'toni.jpg', fechaRegistro: new Date('20/03/2014'),
+        id: 1, nombre: 'Pablo Antonio', apellido: 'Jimenez', fechaNacimiento: new Date(),
+        genero: 'M', grupoSanguineo: 'ORH+', foto: 'toni.jpg', fechaRegistro: new Date(),
         activo: true, idUsuario: 1
       },
 
