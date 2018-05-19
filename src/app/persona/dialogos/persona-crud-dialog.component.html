@@ -1,0 +1,38 @@
+<form [formGroup]="personaForm" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>{{title}}</h1>
+  <div class="example-container">
+    <mat-form-field *ngIf="hiddenElement">
+      <input matInput formControlName="id" placeholder="Id" required [readonly]="readonlyElementId">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="nombre" placeholder="Nombre" required="readonlyElement" >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="apellido" placeholder="Apellido" required [readonly]="readonlyElement" >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="fechaNacimiento" placeholder="Fecha nacimiento" [matDatepicker]="picker" required >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Seleccione genero" formControlName="genero"  name="genero" required>
+        <mat-option *ngFor="let genero of generos" [value]="genero.value">
+          {{genero.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Seleccione grupo sanguineo" formControlName="grupoSanguineo" name="grupoSanguineo" required>
+        <mat-option *ngFor="let grupoSanguineo of grupoSanguineos" [value]="grupoSanguineo.value">
+            {{grupoSanguineo.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <mat-dialog-actions>
+    <button mat-button type="submit" mat-raised-button color="primary">Crear</button>
+    <button mat-button type="button" mat-dialog-close mat-raised-button color="primary">{{buttonNameCancel}}</button>
+  </mat-dialog-actions>
+</form>
