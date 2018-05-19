@@ -31,10 +31,10 @@ export class PersonaService {
   }
   //TODO: Metodos Observables para llamar al servicio Http
 
-  crear(persona: Persona) {
+  crear(persona: Persona)  {
     // TODO: llamar al servicio http para crear POST
-    console.log(persona);
     this.personas.push(persona);
+
   }
 
   public getPersonas() {

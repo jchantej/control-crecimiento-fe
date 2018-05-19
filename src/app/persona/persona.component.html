@@ -1,12 +1,7 @@
 <p>
     Listado de Niñ@s
 </p>
-<mat-form-field appearance="outline">
-        <mat-label>Outline form field</mat-label>
-        <input matInput placeholder="Placeholder">
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint>Hint</mat-hint>
-      </mat-form-field>
+
 <div class="persona-container mat-elevation-z8">
 
     <div class="persona-header">
@@ -42,6 +37,13 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header> Género </mat-header-cell>
         <mat-cell *matCellDef="let persona"> {{persona.genero}} </mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="fechaNacimiento">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha nacimiento </mat-header-cell>
+        <mat-cell *matCellDef="let persona"> {{persona.fechaNacimiento | date : 'dd/MM/yyyy'}} </mat-cell>
+      </ng-container>
+  
+  
   
   
       <!-- Acciones-->

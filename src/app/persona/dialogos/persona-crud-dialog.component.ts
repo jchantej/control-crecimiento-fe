@@ -1,20 +1,21 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
-
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { PersonaService } from '../../persona/persona.service';
+import { Persona } from '../../persona/persona.model';
 @Component({
     styleUrls: ['./persona-crud-dialog.component.css'],
     templateUrl: './persona-crud-dialog.component.html'
 })
 export class PersonaCrudDialogComponent implements OnInit {
-    form: FormGroup;
+    personaForm: FormGroup;
     readonlyElementId = false;
     readonlyElement = false;
     hiddenElement = false;
     hiddenElementButton = false;
     buttonNameOk: string;
-    buttonNameCancel: string;
+    buttonNameCancel = 'Cancelar';
     title: string;
     generos = [
         { value: 'M', viewValue: 'Masculino' },
@@ -33,50 +34,72 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     ];
     constructor(
+        private dialog: MatDialog,
+        private personaService: PersonaService,
         private formBuilder: FormBuilder,
-        private dialogRef: MatDialogRef<PersonaCrudDialogComponent>,
         @Inject(MAT_DIALOG_DATA) private data
-    ) { }
+    ) {
+        this.createForm();
+    }
 
     ngOnInit(): void {
-        this.form = this.formBuilder.group({
-            id: this.data ? this.data.id : '',
-            name: this.data ? this.data.name : '',
-            description: this.data ? this.data.description : ''
-        });
+
         this.buttonNameCancel = 'Cancelar';
-        this.changeStateControls();
+        // this.changeStateControls();
 
     }
 
-    submit(form) {
-        this.dialogRef.close(`${form.value.id}`);
-        this.dialogRef.close(`${form.value.name}`);
-        this.dialogRef.close(`${form.value.description}`);
+    createForm() {
+        this.personaForm = this.formBuilder.group({
+            nombre: '',
+            apellido: '',
+            fechaNacimiento: '',
+            genero: '',
+            grupoSanguineo: '',
+            foto: ''
+        });
     }
 
-    changeStateControls() {
-        if (this.data.action === 'CREATE') {
-            this.title = 'Crear Niñ@';
-            this.buttonNameOk = 'Crear';
-            this.hiddenElementButton = true;
-        } else if (this.data.action === 'READ') {
-            this.title = 'Información Niñ@';
-            this.buttonNameCancel = 'Cerrar';
-            this.readonlyElement = true;
-            this.readonlyElementId = true;
-            this.hiddenElement = true;
-        } else if (this.data.action === 'UPDATE') {
-            this.title = 'Editar Nin@';
-            this.buttonNameOk = 'Editar';
-            this.readonlyElementId = true;
-            this.hiddenElement = true;
-            this.hiddenElementButton = true;
-        } else {
-            console.log('Opciones no contempladas');
-        }
-
+    private personaMapData(): Persona {
+        const formModel = this.personaForm.value;
+        console.log(formModel);
+        const personaMap: Persona = {
+            nombre: formModel.nombre,
+            apellido: formModel.apellido,
+            fechaNacimiento: new Date(formModel.fechaNacimiento),
+            genero: formModel.genero,
+            grupoSanguineo: formModel.grupoSanguineo,
+            foto: formModel.foto
+        };
+        return personaMap;
     }
+    public onSubmit() {
+        //this.persona.id = 3;
+        this.personaService.crear(this.personaMapData());
+        this.dialog.closeAll();
+    }
+    /* changeStateControls() {
+         if (this.data.action === 'CREATE') {
+             this.title = 'Crear Niñ@';
+             this.buttonNameOk = 'Crear';
+             this.hiddenElementButton = true;
+         } else if (this.data.action === 'READ') {
+             this.title = 'Información Niñ@';
+             this.buttonNameCancel = 'Cerrar';
+             this.readonlyElement = true;
+             this.readonlyElementId = true;
+             this.hiddenElement = true;
+         } else if (this.data.action === 'UPDATE') {
+             this.title = 'Editar Nin@';
+             this.buttonNameOk = 'Editar';
+             this.readonlyElementId = true;
+             this.hiddenElement = true;
+             this.hiddenElementButton = true;
+         } else {
+             console.log('Opciones no contempladas');
+         }
+ 
+     }*/
 }
 
 
