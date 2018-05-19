@@ -15,8 +15,8 @@ export class PersonaService {
       },
 
       {
-        id: 2, nombre: 'Jostyn Joel', apellido: 'Riofrio', fechaNacimiento: new Date('20/03/2014'),
-        genero: 'M', grupoSanguineo: 'ORH+', foto: 'guasuso.jpg', fechaRegistro: new Date('20/03/2014'),
+        id: 2, nombre: 'Jostyn Joel', apellido: 'Riofrio', fechaNacimiento: new Date(),
+        genero: 'M', grupoSanguineo: 'ORH+', foto: 'guasuso.jpg', fechaRegistro: new Date(),
         activo: true, idUsuario: 1
       },
 

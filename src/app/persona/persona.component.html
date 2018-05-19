@@ -1,94 +1,67 @@
 <p>
     Listado de Niñ@s
 </p>
-<!--Elegant-->
+<mat-form-field appearance="outline">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+<div class="persona-container mat-elevation-z8">
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                <button type="button" class="btn  mb-2 btn-sm  special-color-dark waves-light" data-toggle="modal" data-target="#cPersonaModal"
-                    (click)="cPersonaModal.show()" mdbWavesEffect>
-                    <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar</button>
-            </th>
-            <th>foto</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Fecha Nacimiento</th>
-            <th>Acciones</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor='let persona of personas'>
-            <td>{{persona.id}}</td>
-            <td>{{persona.foto}}</td>
-            <td>{{persona.nombre}}</td>
-            <td>{{persona.apellido}}</td>
-            <td>{{persona.fechaNacimiento | date: 'dd/MM/yyyy'}}</td>
-            <td>
-                <button type="button" class="btn mb-2 btn-sm  btn-default btn-rounded waves-light" mdbWavesEffect>
-                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="btn mb-2 btn-sm  btn-primary btn-rounded waves-light" mdbWavesEffect>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="btn mb-2 btn-sm  btn-danger  btn-rounded waves-light" mdbWavesEffect>
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-            </td>
-        </tr>
-
-</table>
-
-<div mdbModal #cPersonaModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-inline">
-            <div class="modal-content">
-                <div class="modal-header special-color-dark darken-3 white-text">
-                    <h4 class="title">
-                        <i class="fa fa-pencil"></i> Resgitro Niñ@</h4>
-                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="cPersonaModal.hide()">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-
-                    <div class="modal-body mb-0">
-                        <div class="md-form form-sm">
-                            <i class="fa fa-envelope prefix"></i>
-                            <input mdbInputDirective type="text" formControlName='nombre' class="form-control">
-                            <label for="nombre">Nombre</label>
-                        </div>
-
-                        <div class="md-form form-sm">
-                            <i class="fa fa-lock prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="apellido" class="form-control">
-                            <label for="nombre">Apellido</label>
-                        </div>
-
-                        <div class="md-form form-sm">
-                            <i class="fa fa-lock prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="fechaNacimiento" class="form-control">
-
-                            <input id="meeting" type="date" formControlName="fechaNacimiento" class="form-control"/>
-                            <label for="fechaNacimiento">Fecha nacimiento</label>
-                        </div>
-
-                        <div class="md-form form-sm">
-                            <i class="fa fa-tag prefix"></i>
-                            <input mdbInputDirective type="text" formControlName="genero" class="form-control">
-                            <label for="genero">Genero</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer text-center">
-                    <button type="submit" class="btn btn-info mb-2 btn-sm waves-light" mdbWavesEffect>Crear</button>
-                    <button type="button" class="btn btn-info mb-2 btn-sm waves-light" data-dismiss="modal" (click)="cPersonaModal.hide()" mdbWavesEffect>Cancelar</button>
-                </div>
-            </div>
-        </form>
+    <div class="persona-header">
+      <button matTooltip="Agregar Nuevo" mat-raised-button color="primary" (click)="prepareCreate()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
     </div>
-</div>
+    <div class="persona-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+      </mat-form-field>
+    </div>
+    <mat-table #table [dataSource]="dataSourcePersonas" matSort>
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id. </mat-header-cell>
+        <mat-cell *matCellDef="let persona"> {{persona.id}} </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let persona"> {{persona.nombre}} </mat-cell>
+      </ng-container>
+  
+      <!-- Description Column -->
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let persona"> {{persona.apellido}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="genero">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Género </mat-header-cell>
+        <mat-cell *matCellDef="let persona"> {{persona.genero}} </mat-cell>
+      </ng-container>
+  
+  
+      <!-- Acciones-->
+      <ng-container matColumnDef="actionsColumn">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
+            <mat-icon>info_outline</mat-icon>
+          </button>
+          <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item.id)">
+            <mat-icon>create</mat-icon>
+          </button>
+          <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="delete(item.id)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+  </div>
