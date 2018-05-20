@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { PersonaComponent } from './persona/persona.component';
 import { PersonaService } from '../app/persona/persona.service';
 import {PersonaCrudDialogComponent} from '../app/persona/dialogos/persona-crud-dialog.component';
+import { HttpModule, JsonpModule } from '@angular/http';
+import {HttpService} from '../app/core/http.service';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import {PersonaCrudDialogComponent} from '../app/persona/dialogos/persona-crud-d
     FlexLayoutModule,
     FormsModule,
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule,
+    JsonpModule
   ],
   entryComponents: [PersonaCrudDialogComponent],
-  providers: [PersonaService],
+  providers: [HttpService, PersonaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
