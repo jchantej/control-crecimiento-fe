@@ -1,0 +1,18 @@
+
+.persona-container-list {
+    background-color: whitesmoke;
+  }
+
+  .bounds {
+    background-color:white;
+    height :800px;
+  }
+
+  .example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 50%;
+  }

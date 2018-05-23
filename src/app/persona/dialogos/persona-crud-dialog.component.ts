@@ -69,43 +69,46 @@ export class PersonaCrudDialogComponent implements OnInit {
         return personaMap;
     }
     public onSubmit() {
-        this.personaService.crear(this.personaMapData()).subscribe(
-            () => {
-                this.dialogRef.close();
-                if (this.data.action === 'CREATE') {
-                    this.openSnackBar('OK.!', 'Datos almacenados correctamente');
-                } else if (this.data.action === 'UPDATE') {
-                   //TODO: para update
+        if !(this.personaForm.invalid){
+
+            this.personaService.crear(this.personaMapData()).subscribe(
+                () => {
+                    this.dialogRef.close();
+                    if (this.data.action === 'CREATE') {
+                        this.openSnackBar('OK.!', 'Datos almacenados correctamente');
+                    } else if (this.data.action === 'UPDATE') {
+                        //TODO: para update
+                    }
+                },
+                error => {
+                    this.dialogRef.close(); //TODO: cerficar para no cerrar la ventana ante la falta de un campo en el formularios
+                    this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
                 }
-            },
-            error => {
-                this.dialogRef.close();
-                this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
-            }
-        );
+            );
+
+        }
     }
 
-
-      changeStateControls() {
-          if (this.data.action === 'CREATE') {
-              this.title = 'Crear Niño';
-              this.visibleButtonCreate = true;
-              this.visibleButtonUpdate = false;
-              this.buttonNameOKCancel = 'Cancelar';
-          } else if (this.data.action === 'READ') {
-              this.title = 'Información Niñ@';
-              this.visibleButtonCreate = false;
-              this.visibleButtonUpdate = false;
-              this.buttonNameOKCancel = 'Aceptar';
-          } else if (this.data.action === 'UPDATE') {
-              this.title = 'Editar Nin@';
-              this.visibleButtonCreate = false;
-              this.visibleButtonUpdate = true;
-              this.buttonNameOKCancel = 'Cancelar';
-          } else {
-              console.log('Opciones no contempladas');
-          }  
-      }
+    changeStateControls() {
+        if (this.data.action === 'CREATE') {
+            this.title = 'Crear Niño';
+            this.visibleButtonCreate = true;
+            this.visibleButtonUpdate = false;
+            this.buttonNameOKCancel = 'Cancelar';
+        } else if (this.data.action === 'READ') {
+            this.title = 'Información Niñ@';
+            this.visibleButtonCreate = false;
+            this.visibleButtonUpdate = false;
+            this.buttonNameOKCancel = 'Aceptar';
+        } else if (this.data.action === 'UPDATE') {
+            this.title = 'Editar Nin@';
+            this.visibleButtonCreate = false;
+            this.visibleButtonUpdate = true;
+            this.buttonNameOKCancel = 'Cancelar';
+        } else {
+            console.log('Opciones no contempladas');
+        }
+    }
     openSnackBar(title: string, message: string) {
         this.snackBar.open(title, message, {
             duration: 8000,
