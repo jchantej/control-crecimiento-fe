@@ -1,6 +1,15 @@
 <div class="container">
   <div fxLayout="row" fxLayoutAlign="end">
     <div fxFlex="25%" class="persona-container-list">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="selectedPersona = persona">
+          <img matListAvatar src="https://scontent.fmad8-1.fna.fbcdn.net/v/t1.0-9/19510451_10213341195146988_8076940860224184211_n.jpg?_nc_cat=0&oh=c9c5f0550befb3c17547a59537abf9d8&oe=5BC2FD53"
+            alt="yo">
+          <h2 matLine> {{persona.nombre}} {{persona.apellido}} </h2>
+          <p mat-line> nacido: {{persona.fechaNacimiento| date}} </p>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-nav-list>
     </div>
 
     <div fxFlex="75%" class="bounds">
@@ -9,7 +18,7 @@
         <form [formGroup]="controlForm" (ngSubmit)="onSubmit()">
           <mat-form-field>
             <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
-            <mat-error >Debe ingresar un peso</mat-error>
+            <mat-error>Debe ingresar un peso</mat-error>
           </mat-form-field>
           <mat-form-field>
             <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
