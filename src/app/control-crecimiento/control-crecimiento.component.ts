@@ -4,6 +4,7 @@ import { ControlCrecimiento } from './control-crecimiento.model';
 import { ControlCrecimientoService } from './control-crecimiento.service';
 import { MatSnackBar } from '@angular/material';
 
+
 @Component({
   selector: 'app-control-crecimiento',
   templateUrl: './control-crecimiento.component.html',
@@ -11,20 +12,24 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ControlCrecimientoComponent implements OnInit {
 
+
   controlForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
     private controlCrecimientoService: ControlCrecimientoService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar) {
+  }
   ngOnInit() {
+  //  this.sincronizarData();
     this.createForm();
+
   }
 
-  createForm() {
-    this.controlForm = this.formBuilder.group({
-      peso: ['', Validators.required],
-      talla: ['', Validators.required]
-    });
-  }
+    createForm() {
+      this.controlForm = this.formBuilder.group({
+        peso: ['', Validators.required],
+        talla: ['', Validators.required]
+      });
+    }
 
   private controlMapData(): ControlCrecimiento {
     const formModel = this.controlForm.value;
@@ -33,19 +38,21 @@ export class ControlCrecimientoComponent implements OnInit {
       talla: formModel.talla,
       idPersona: 203 //TODO:  Aqui se deb setear el valor del id de la perona
     };
-
     return controlMap;
   }
 
   public onSubmit() {
-    this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
-      () => {
-        this.openSnackBar('OK.!', 'Control agregado correctamente');
-      },
-      error => {
-        this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
-      }
-    );
+
+    if !(this.controlForm.invalid){
+      this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
+        () => {
+          this.openSnackBar('OK.!', 'Control agregado correctamente');
+        },
+        error => {
+          this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
+        }
+      );
+    }
   }
 
   openSnackBar(title: string, message: string) {
