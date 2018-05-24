@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PercentilOms } from './percentil-oms.model';
+import { PercentilOmsService } from './percentil-oms.service';
 
 @Component({
   selector: 'app-percentil-oms',
@@ -7,75 +9,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PercentilOmsComponent implements OnInit {
 
+
+  percentilesOms: PercentilOms[];
+  genero = 'M';  //TODO: debe variar segun el genero de la persona
+  tipo = 'T'; //TODO: debe varia segun la selccion de la grafica a mostrar
+
   chartOptions = {
     responsive: true
   };
 
   chartData = [
     {
-      data: [45.644, 45.808, 45.971, 46.134, 46.297, 46.461, 46.624, 46.788,
-        46.951, 47.115, 47.278, 47.441, 47.605, 47.769, 47.933, 48.066, 48.198,
-        48.33, 48.461, 48.591, 48.72,
-        100.863,
-        100.879,
-        100.893,
-        100.909,
-        100.924
-
-      ], label: 'Percentil 3'
+      data: [], label: 'Percentil 3'
     },
     {
-      data: [47.217, 47.383, 47.549, 47.714, 47.88, 48.046, 48.212, 48.378, 48.544, 48.71,
-        48.875, 49.041, 49.208, 49.374, 49.54, 49.676, 49.81, 49.945, 50.078, 50.211, 50.343,
-        104.922,
-        104.937,
-        104.953,
-        104.97,
-
-      ], label: 'Percentil 15'
+      data: [], label: 'Percentil 50'
     },
     {
-      data: [49.148, 49.317, 49.485, 49.654, 49.823, 49.992, 50.161, 50.33, 50.499, 50.668,
-        50.837, 51.005, 51.174, 51.343, 51.512, 51.651, 51.79, 51.927, 52.064, 52.2, 52.335,
-        109.867,
-        109.884,
-        109.901,
-        109.918,
-        109.935
-
-      ], label: 'Percentil 50'
-    },
-    {
-      data: [51.078, 51.25, 51.422, 51.594, 51.766, 51.938, 52.11, 52.282, 52.454, 52.625,
-        52.798, 52.969, 53.141, 53.313, 53.484, 53.626, 53.769, 53.909, 54.05, 54.189, 54.328,
-        114.828,
-        114.846,
-        114.865,
-        114.883,
-        114.901
-
-      ], label: 'Percentil 85'
-    }
-    {
-      data: [52.651, 52.825, 53, 53.175, 53.349, 53.524, 53.698, 53.872, 54.046, 54.22, 54.395,
-        54.569, 54.743, 54.917, 55.091, 55.236, 55.381, 55.524, 55.668, 55.809, 55.951,
-        118.87,
-        118.888,
-        118.909,
-        118.927,
-        118.946
-
-      ], label: 'Percentil 97'
+      data: [], label: 'Percentil 97'
     }
   ];
+  chartLabels = [];
 
-  chartLabels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',
-    '16', '17', '18', '19', '20', '1852', '1853', '1854', '1855', '1856'];
-
-
-  constructor() { }
+  constructor(private percentilOmsService: PercentilOmsService) { }
 
   ngOnInit() {
+
+    this.sincronizarData();
+  }
+
+  sincronizarData() {
+    this.percentilOmsService.getListaPercentilesOms(this.genero, this.tipo).subscribe(
+      percentil => {
+        this.chartData[0].data = percentil.map(per => per.percentil3);
+        this.chartData[1].data = percentil.map(per => per.percentil50);
+        this.chartData[2].data = percentil.map(per => per.percentil97);
+        this.chartLabels = percentil.map(per => per.edad.toString());
+      }
+    );
+
   }
 
   onChartClick(event) {
