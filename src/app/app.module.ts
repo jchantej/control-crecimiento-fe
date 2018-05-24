@@ -13,18 +13,22 @@ import { PersonaCrudDialogComponent } from '../app/persona/dialogos/persona-crud
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpService } from '../app/core/http.service';
 import { ControlCrecimientoComponent } from './control-crecimiento/control-crecimiento.component';
+import { ChartsModule } from 'ng2-charts';
+import { PercentilOmsComponent } from './percentil-oms/percentil-oms.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonaComponent,
     PersonaCrudDialogComponent,
-    ControlCrecimientoComponent
+    ControlCrecimientoComponent,
+    PercentilOmsComponent
 
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    ChartsModule,
     CdkTableModule,
     FlexLayoutModule,
     FormsModule,
