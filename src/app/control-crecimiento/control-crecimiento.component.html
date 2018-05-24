@@ -1,5 +1,5 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutAlign="end">
+  <div fxLayout="row" fxLayoutAlign="center">
     <div fxFlex="25%" class="persona-container-list">
       <mat-nav-list>
         <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="selectedPersona = persona">
@@ -11,21 +11,29 @@
         </mat-list-item>
       </mat-nav-list>
     </div>
-
-    <div fxFlex="75%" class="bounds">
-      INFORMACION DE CONTROL NINO
-      <div class="example-container">
-        <form [formGroup]="controlForm" (ngSubmit)="onSubmit()">
-          <mat-form-field>
-            <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
-            <mat-error>Debe ingresar un peso</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
-            <mat-error>debe ingresar una talla</mat-error>
-          </mat-form-field>
-          <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
-        </form>
+    <div fxFlex="75%">
+      <div fxLayout="column" fxLayoutAlign="center">
+        <div fxFlex="30%">
+          INFORMACION DE CONTROL NINO
+          <div class="example-container">
+            <form [formGroup]="controlForm" (ngSubmit)="onSubmit()">
+              <mat-form-field>
+                <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
+                <mat-error>Debe ingresar un peso</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
+                <mat-error>debe ingresar una talla</mat-error>
+              </mat-form-field>
+              <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxFlex="70%">
+        Aqui la grafica
+        <app-percentil-oms></app-percentil-oms>
       </div>
     </div>
   </div>

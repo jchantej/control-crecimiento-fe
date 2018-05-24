@@ -15,7 +15,7 @@ import { PersonaService } from '../persona/persona.service';
 export class ControlCrecimientoComponent implements OnInit {
 
   selectedPersona: Persona;
-  personas[]: Persona;
+  personas: Persona[];
   controlForm: FormGroup;
   idPersona: number;
 
@@ -54,7 +54,7 @@ export class ControlCrecimientoComponent implements OnInit {
   }
 
   public onSubmit() {
-    if !(this.controlForm.invalid){
+    if (!this.controlForm.invalid) {
       this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
         () => {
           this.openSnackBar('OK.!', 'Control agregado correctamente');
