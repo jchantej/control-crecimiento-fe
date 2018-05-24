@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { PersonaComponent } from './persona/persona.component';
 import { PersonaService } from '../app/persona/persona.service';
+import { PercentilOmsService } from '../app/percentil-oms/percentil-oms.service';
 import { ControlCrecimientoService } from '../app/control-crecimiento/control-crecimiento.service';
 import { PersonaCrudDialogComponent } from '../app/persona/dialogos/persona-crud-dialog.component';
 import { HttpModule, JsonpModule } from '@angular/http';
@@ -38,7 +39,10 @@ import { PercentilOmsComponent } from './percentil-oms/percentil-oms.component';
     JsonpModule
   ],
   entryComponents: [PersonaCrudDialogComponent],
-  providers: [HttpService, ControlCrecimientoService, PersonaService],
+  providers: [HttpService,
+    ControlCrecimientoService,
+    PersonaService,
+    PercentilOmsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
