@@ -1,6 +1,6 @@
 
 .persona-container-list {
-    background-color: whitesmoke;
+    background-color: azure;
   }
 
   .bounds {
@@ -8,11 +8,6 @@
     height :800px;
   }
 
-  .example-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
   .example-container > * {
     width: 50%;
   }

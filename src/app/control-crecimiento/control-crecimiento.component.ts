@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ControlCrecimiento } from './control-crecimiento.model';
 import { ControlCrecimientoService } from './control-crecimiento.service';
-import { MatSnackBar } from '@angular/material';
-
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
+import { PercentilOmsComponent } from '../percentil-oms/percentil-oms.component';
 import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
 
@@ -14,11 +14,16 @@ import { PersonaService } from '../persona/persona.service';
 })
 export class ControlCrecimientoComponent implements OnInit {
 
+  dataSourceControles: MatTableDataSource<ControlCrecimiento>;
+  displayedColumns = ['fecha', 'edad', 'edadPeriodo', 'peso', 'talla', 'actionsColumn'];
   selectedPersona: Persona;
   personas: Persona[];
   controlForm: FormGroup;
   idPersona: number;
+  controlesCrecimiento: ControlCrecimiento[];
 
+  @ViewChild(PercentilOmsComponent) percentilOms: PercentilOmsComponent;
+  test = '--';
   constructor(private formBuilder: FormBuilder,
     private controlCrecimientoService: ControlCrecimientoService,
     private personaService: PersonaService,
@@ -30,6 +35,17 @@ export class ControlCrecimientoComponent implements OnInit {
 
   }
 
+  sincronizarData() {
+    this.getControlesCrecimiento();
+  }
+  getControlesCrecimiento() {
+    this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
+      controles => {
+        this.dataSourceControles = new MatTableDataSource<ControlCrecimiento>(controles);
+        this.percentilOms.graficarControlesPersona(controles);
+      }
+    );
+  }
   getPersonas() {
     this.personaService.getListaPersonas().subscribe(
       persona => this.personas = persona
@@ -58,6 +74,7 @@ export class ControlCrecimientoComponent implements OnInit {
       this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
         () => {
           this.openSnackBar('OK.!', 'Control agregado correctamente');
+          this.sincronizarData();
         },
         error => {
           this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
