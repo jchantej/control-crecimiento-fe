@@ -11,3 +11,8 @@
   .example-container > * {
     width: 50%;
   }
+
+  .form-control-container {
+    display: flex;
+    flex-direction: column;
+  }

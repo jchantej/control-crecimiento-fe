@@ -30,6 +30,8 @@ export class ControlCrecimientoComponent implements OnInit {
     private controlCrecimientoService: ControlCrecimientoService,
     private personaService: PersonaService,
     private snackBar: MatSnackBar) {
+
+    this.selectedPersona = { nombre: '', apellido: '', fechaNacimiento: new Date(), genero: '', grupoSanguineo: '', idUsuario: 0 }
   }
   ngOnInit() {
     this.getPersonas();
@@ -47,7 +49,7 @@ export class ControlCrecimientoComponent implements OnInit {
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {
         this.dataSourceControles = new MatTableDataSource<ControlCrecimiento>(controles);
-        this.percentilOms.sincronizarData(controles, this.selectedPersona,this.tipo);
+        this.percentilOms.sincronizarData(controles, this.selectedPersona, this.tipo);
       }
     );
   }

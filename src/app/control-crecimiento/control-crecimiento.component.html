@@ -12,97 +12,109 @@
       </mat-nav-list>
     </div>
     <div fxFlex="70%">
-      <div fxLayout="column">
-        <div fxFlex>
-          INFORMACION DE CONTROL NINO
-          <div>
-            <form [formGroup]="controlForm" (ngSubmit)="onSubmit()">
-              <mat-form-field>
-                <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
-                <mat-error>Debe ingresar un peso</mat-error>
-              </mat-form-field>
-              <mat-form-field>
-                <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
-                <mat-error>debe ingresar una talla</mat-error>
-              </mat-form-field>
-              <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
-            </form>
-          </div>
+      <div fxLayout="row" fxLayoutWrap>
+        <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50">
+          Aqui la foto
         </div>
+        <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
+          <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
+          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento |date}}</p>
+          <p>Edad actual: {{selectedPersona.edadPeriodo}}</p>
+          <p>genero: {{selectedPersona.genero}}</p>
+        </div>
+        <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40">
+          Agregar control
+          <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container ">
+            <mat-form-field>
+              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
+              <mat-error>Debe ingresar un peso</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
+              <mat-error>debe ingresar una talla</mat-error>
+            </mat-form-field>
+            <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
+          </form>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div fxLayout="row" fxFlex="100">
+        <mat-radio-group name="opTipos" fxLayout="row" fxLayoutAlign="center">
+          <mat-radio-button *ngFor="let tipo of tipos" [checked]="tipo.checked" [value]="tipo.value" (change)="onSelectionChange(tipo)"
+            name="opTipos">{{tipo.viewValue}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-divider></mat-divider>
+      </div>
+      <hr>
+      <div fxLayout="row" fxFlex="100">
         <div fxFlex>
           <app-percentil-oms></app-percentil-oms>
         </div>
+      </div>
 
-        <div fxFlex>
-          <div class="control-header">
-            <p> Infomacion refrente a los cotroles</p>
-          </div>
-          <div class="persona-header">
-            <mat-form-field>
-              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
-            </mat-form-field>
-          </div>
-          <mat-table #table [dataSource]="dataSourceControles" matSort>
-            <!-- Id Column -->
-            <ng-container matColumnDef="fecha">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha registro</mat-header-cell>
-              <mat-cell *matCellDef="let control"> {{control.fechaRegistro | date : 'dd/MM/yyyy'}} </mat-cell>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="edad">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(días) </mat-header-cell>
-              <mat-cell *matCellDef="let control"> {{control.edad}} </mat-cell>
-            </ng-container>
-
-            <!-- Description Column -->
-            <ng-container matColumnDef="edadPeriodo">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(período) </mat-header-cell>
-              <mat-cell *matCellDef="let control"> {{control.edadPeriodo}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="peso">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Peso(Kg) </mat-header-cell>
-              <mat-cell *matCellDef="let control"> {{control.peso}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="talla">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Talla (cm)</mat-header-cell>
-              <mat-cell *matCellDef="let control"> {{control.talla}} </mat-cell>
-            </ng-container>
-            <!-- Acciones-->
-            <ng-container matColumnDef="actionsColumn">
-              <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-              <mat-cell *matCellDef="let item">
-                <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
-                  <mat-icon>info_outline</mat-icon>
-                </button>
-                <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item.id)">
-                  <mat-icon>create</mat-icon>
-                </button>
-                <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="delete(item.id)">
-                  <mat-icon>remove_circle</mat-icon>
-                </button>
-              </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-          </mat-paginator>
+      <div fxFlex>
+        <div class="control-header">
+          <p> Infomacion refrente a los cotroles</p>
         </div>
+        <div class="persona-header">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+          </mat-form-field>
+        </div>
+        <mat-table #table [dataSource]="dataSourceControles" matSort>
+          <!-- Id Column -->
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha registro</mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.fechaRegistro | date : 'dd/MM/yyyy'}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="edad">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(días) </mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.edad}} </mat-cell>
+          </ng-container>
+
+          <!-- Description Column -->
+          <ng-container matColumnDef="edadPeriodo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(período) </mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.edadPeriodo}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="peso">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Peso(Kg) </mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.peso}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="talla">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Talla (cm)</mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.talla}} </mat-cell>
+          </ng-container>
+          <!-- Acciones-->
+          <ng-container matColumnDef="actionsColumn">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let item">
+              <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+              <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item.id)">
+                <mat-icon>create</mat-icon>
+              </button>
+              <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="delete(item.id)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
       </div>
     </div>
     <div fxFlex="10%" class="persona-container-list">
-      <mat-radio-group name="opTipos" fxLayout="column" fxLayoutAlign="center">
-        <mat-radio-button *ngFor="let tipo of tipos" 
-        [checked]="tipo.checked"  
-         [value]="tipo.value"
-         (change)="onSelectionChange(tipo)"
-          name="opTipos">{{tipo.viewValue}}
-
-        </mat-radio-button>
-      </mat-radio-group>
+      aqui algo
     </div>
   </div>
 </div>
