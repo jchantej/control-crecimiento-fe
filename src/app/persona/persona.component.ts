@@ -23,7 +23,8 @@ export class PersonaComponent implements OnInit {
   }
 
   sincronizarData() {
-    this.personaService.getListaPersonas().subscribe(
+    //TODO: se debe pasar el is de usuario
+    this.personaService.getListaPersonas(1).subscribe(
       persona => this.dataSourcePersonas = new MatTableDataSource<Persona>(persona)
     );
 

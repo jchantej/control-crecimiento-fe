@@ -5,11 +5,13 @@ import { HttpService } from '../core/http.service';
 @Injectable()
 export class PersonaService {
   static PERSONAS = '/personas';
+  static USUARIO = '/usuario';
+
   constructor(private httpService: HttpService) {
   }
 
-  getListaPersonas(): Observable<Persona[]> {
-    return this.httpService.get(PersonaService.PERSONAS);
+  getListaPersonas(id: number): Observable<Persona[]> {
+    return this.httpService.get(PersonaService.PERSONAS + PersonaService.USUARIO + '/' + id);
   }
 
   crear(persona: Persona): Observable<any> {

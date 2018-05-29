@@ -23,7 +23,6 @@ export class ControlCrecimientoComponent implements OnInit {
   controlesCrecimiento: ControlCrecimiento[];
 
   @ViewChild(PercentilOmsComponent) percentilOms: PercentilOmsComponent;
-  test = '--';
   constructor(private formBuilder: FormBuilder,
     private controlCrecimientoService: ControlCrecimientoService,
     private personaService: PersonaService,
@@ -42,12 +41,13 @@ export class ControlCrecimientoComponent implements OnInit {
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {
         this.dataSourceControles = new MatTableDataSource<ControlCrecimiento>(controles);
-        this.percentilOms.graficarControlesPersona(controles);
+        this.percentilOms.sincronizarData(controles, this.selectedPersona);
       }
     );
   }
   getPersonas() {
-    this.personaService.getListaPersonas().subscribe(
+    //TODO: se debe pasar el id usuario
+    this.personaService.getListaPersonas(1).subscribe(
       persona => this.personas = persona
     );
   }
@@ -64,7 +64,7 @@ export class ControlCrecimientoComponent implements OnInit {
     const controlMap: ControlCrecimiento = {
       peso: formModel.peso,
       talla: formModel.talla,
-      idPersona: this.selectedPersona.id //TODO:  Aqui se deb setear el valor del id de la perona
+      idPersona: this.selectedPersona.id
     };
     return controlMap;
   }

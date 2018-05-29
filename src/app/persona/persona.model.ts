@@ -3,6 +3,8 @@ export interface Persona {
     nombre: string;
     apellido: string;
     fechaNacimiento: Date;
+    edadDias?: number;
+    periodoEdad?: string;
     genero: string;
     grupoSanguineo: string;
     foto?: string;
