@@ -11,10 +11,6 @@ export class PercentilOmsComponent implements OnInit {
 
   controlesCrecimiento: any[];
   percentilesOms: PercentilOms[];
-  genero = 'M';  //TODO: debe variar segun el genero de la persona
-  tipo = 'T'; //TODO: debe varia segun la selccion de la grafica a mostrar
-  edad = '270'; //TODO: debe varia segun la selccion de la grafica a mostrar
-
   chartOptions = {
     responsive: true,
     scales: {
@@ -69,8 +65,6 @@ export class PercentilOmsComponent implements OnInit {
       ]
     }
   ];
-  
-  public colors: Array<Color> = [{}];
 
   chartLabels = [];
   constructor(private percentilOmsService: PercentilOmsService) {
@@ -81,17 +75,27 @@ export class PercentilOmsComponent implements OnInit {
 
   }
 
-  sincronizarData(controlesCrecimineto, persona) {
-    console.log(persona);
+  sincronizarData(controlesCrecimineto, persona, tipo) {
+
     let pivote = 0;
+    this.chartData[3].data = [];
     const valoresX = [];
     const valoresY = [];
-    console.log(controlesCrecimineto.length);
-    for (let i = 0; i < controlesCrecimineto.length; ++i) {
-      valoresX[i] = (controlesCrecimineto[i].edad);
-      valoresY[i] = (controlesCrecimineto[i].talla);
+
+    if (tipo.value === 'P') {
+      for (let i = 0; i < controlesCrecimineto.length; ++i) {
+        valoresX[i] = (controlesCrecimineto[i].edad);
+        valoresY[i] = (controlesCrecimineto[i].peso);
+      }
+
+    } else if (tipo.value === 'T') {
+      for (let i = 0; i < controlesCrecimineto.length; ++i) {
+        valoresX[i] = (controlesCrecimineto[i].edad);
+        valoresY[i] = (controlesCrecimineto[i].talla);
+      }
     }
-    this.percentilOmsService.getListaPercentilesOms(persona.genero, this.tipo, persona.edadDias).subscribe(
+
+    this.percentilOmsService.getListaPercentilesOms(persona.genero, tipo.value, persona.edadDias).subscribe(
       percentil => {
         this.chartData[0].data = percentil.map(per => per.percentil3);
         this.chartData[1].data = percentil.map(per => per.percentil50);

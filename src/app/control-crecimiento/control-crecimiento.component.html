@@ -1,5 +1,5 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
     <div fxFlex="20%" class="persona-container-list">
       <mat-nav-list>
         <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="selectedPersona = persona; sincronizarData();">
@@ -94,7 +94,15 @@
       </div>
     </div>
     <div fxFlex="10%" class="persona-container-list">
+      <mat-radio-group name="opTipos" fxLayout="column" fxLayoutAlign="center">
+        <mat-radio-button *ngFor="let tipo of tipos" 
+        [checked]="tipo.checked"  
+         [value]="tipo.value"
+         (change)="onSelectionChange(tipo)"
+          name="opTipos">{{tipo.viewValue}}
 
+        </mat-radio-button>
+      </mat-radio-group>
     </div>
   </div>
 </div>
