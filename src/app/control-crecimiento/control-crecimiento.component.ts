@@ -13,7 +13,7 @@ import { PersonaService } from '../persona/persona.service';
   styleUrls: ['./control-crecimiento.component.css']
 })
 export class ControlCrecimientoComponent implements OnInit {
-
+  tipo: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
   displayedColumns = ['fecha', 'edad', 'edadPeriodo', 'peso', 'talla', 'actionsColumn'];
   selectedPersona: Persona;
@@ -21,13 +21,17 @@ export class ControlCrecimientoComponent implements OnInit {
   controlForm: FormGroup;
   idPersona: number;
   controlesCrecimiento: ControlCrecimiento[];
-
+  tipos = [
+    { value: 'P', viewValue: 'Peso', checked: 'true' },
+    { value: 'T', viewValue: 'Talla', checked: 'false' }
+  ];
   @ViewChild(PercentilOmsComponent) percentilOms: PercentilOmsComponent;
-  test = '--';
   constructor(private formBuilder: FormBuilder,
     private controlCrecimientoService: ControlCrecimientoService,
     private personaService: PersonaService,
     private snackBar: MatSnackBar) {
+
+    this.selectedPersona = { nombre: '', apellido: '', fechaNacimiento: new Date(), genero: '', grupoSanguineo: '', idUsuario: 0 }
   }
   ngOnInit() {
     this.getPersonas();
@@ -39,15 +43,19 @@ export class ControlCrecimientoComponent implements OnInit {
     this.getControlesCrecimiento();
   }
   getControlesCrecimiento() {
+    if (this.tipo === undefined) {
+      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true'} 
+    }
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {
         this.dataSourceControles = new MatTableDataSource<ControlCrecimiento>(controles);
-        this.percentilOms.graficarControlesPersona(controles);
+        this.percentilOms.sincronizarData(controles, this.selectedPersona, this.tipo);
       }
     );
   }
   getPersonas() {
-    this.personaService.getListaPersonas().subscribe(
+    //TODO: se debe pasar el id usuario
+    this.personaService.getListaPersonas(1).subscribe(
       persona => this.personas = persona
     );
   }
@@ -64,7 +72,7 @@ export class ControlCrecimientoComponent implements OnInit {
     const controlMap: ControlCrecimiento = {
       peso: formModel.peso,
       talla: formModel.talla,
-      idPersona: this.selectedPersona.id //TODO:  Aqui se deb setear el valor del id de la perona
+      idPersona: this.selectedPersona.id
     };
     return controlMap;
   }
@@ -88,6 +96,15 @@ export class ControlCrecimientoComponent implements OnInit {
       duration: 8000,
     });
   }
+
+  onSelectionChange(tipo) {
+    this.tipo = tipo;
+    // console.log(this.tipo);
+    this.sincronizarData();
+
+  }
 }
+
+
 
 

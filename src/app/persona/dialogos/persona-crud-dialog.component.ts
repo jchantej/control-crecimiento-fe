@@ -69,7 +69,7 @@ export class PersonaCrudDialogComponent implements OnInit {
         return personaMap;
     }
     public onSubmit() {
-        if !(this.personaForm.invalid){
+        if (!this.personaForm.invalid){
 
             this.personaService.crear(this.personaMapData()).subscribe(
                 () => {
