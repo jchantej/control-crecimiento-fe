@@ -44,7 +44,7 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   getControlesCrecimiento() {
     if (this.tipo === undefined) {
-      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true' }
+      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true'} 
     }
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {
