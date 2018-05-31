@@ -20,20 +20,23 @@
         </mat-expansion-panel-header>
         <!--Dwesde Aqui el formulario de registro-->
 
-        <div class="example-container ">
-          <mat-form-field>
-            <input matInput placeholder="Usuario">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Contraseña">
-          </mat-form-field>
 
+        <form [formGroup]="registroForm" (ngSubmit)=" registrar()" class="example-container">
           <mat-form-field>
-            <input matInput placeholder="Correo">
+            <input class="form-control" formControlName="username" matInput placeholder="Usuario" type="text" required>
+            <mat-error>Debe ingresar un usuario</mat-error>
           </mat-form-field>
+          <mat-form-field>
+            <input class="form-control" matInput formControlName="password" placeholder="Contraseña" type="password" required>
+            <mat-error>debe ingresar una contraseña</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" required>
+            <mat-error>ingrese correo</mat-error>
+          </mat-form-field>
+          <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
+        </form>
 
-          <button mat-button type="submit" mat-raised-button color="primary">Registrar</button>
-        </div>
       </mat-expansion-panel>
 
     </mat-accordion>
