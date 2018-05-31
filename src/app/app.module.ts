@@ -16,6 +16,8 @@ import { HttpService } from '../app/core/http.service';
 import { ControlCrecimientoComponent } from './control-crecimiento/control-crecimiento.component';
 import { ChartsModule } from 'ng2-charts';
 import { PercentilOmsComponent } from './percentil-oms/percentil-oms.component';
+import { InicioComponent } from './inicio/inicio.component';
+import { UsuarioComponent } from './usuario/usuario.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { PercentilOmsComponent } from './percentil-oms/percentil-oms.component';
     PersonaComponent,
     PersonaCrudDialogComponent,
     ControlCrecimientoComponent,
-    PercentilOmsComponent
+    PercentilOmsComponent,
+    InicioComponent,
+    UsuarioComponent
 
   ],
   imports: [

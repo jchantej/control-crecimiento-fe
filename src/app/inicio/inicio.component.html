@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
+  <div fxFlex="50%">
+    <button mat-button type="submit" mat-raised-button color="primary">Login</button>
+  </div>
+</div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
+  <div fxFlex="25%">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Icono
+          </mat-panel-title>
+          <mat-panel-description>
+            Registrate
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!--Dwesde Aqui el formulario de registro-->
+
+
+        <form [formGroup]="registroForm" (ngSubmit)=" registrar()" class="example-container">
+          <mat-form-field>
+            <input class="form-control" formControlName="username" matInput placeholder="Usuario" type="text" required>
+            <mat-error>Debe ingresar un usuario</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input class="form-control" matInput formControlName="password" placeholder="Contraseña" type="password" required>
+            <mat-error>debe ingresar una contraseña</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" required>
+            <mat-error>ingrese correo</mat-error>
+          </mat-form-field>
+          <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
+        </form>
+
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+</div>
