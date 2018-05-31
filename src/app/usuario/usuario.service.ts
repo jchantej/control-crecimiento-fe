@@ -13,4 +13,8 @@ export class UsuarioService {
     return this.httpService.post(UsuarioService.USUARIOS, usuario);
   }
 
+  getUsuario(username: string): Observable<Usuario> {
+    return this.httpService.get(UsuarioService.USUARIOS  + '/' + username);
+  }
+
 }
