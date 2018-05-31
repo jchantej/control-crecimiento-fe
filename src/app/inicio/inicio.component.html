@@ -12,15 +12,12 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Icono
+              <mat-icon>person</mat-icon>
           </mat-panel-title>
           <mat-panel-description>
             Registrate
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <!--Dwesde Aqui el formulario de registro-->
-
-
         <form [formGroup]="registroForm" (ngSubmit)=" registrar()" class="example-container">
           <mat-form-field>
             <input class="form-control" formControlName="username" matInput placeholder="Usuario" type="text" required>
@@ -31,14 +28,12 @@
             <mat-error>debe ingresar una contraseña</mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" required>
-            <mat-error>ingrese correo</mat-error>
+            <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  required>
+            <mat-error *ngIf="correoActual.invalid && (correoActual.dirty || correoActual.touched)">correo invalido</mat-error>
           </mat-form-field>
-          <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
+          <button mat-button type="submit" mat-raised-button color="primary">Registrar</button>
         </form>
-
       </mat-expansion-panel>
-
     </mat-accordion>
   </div>
 </div>

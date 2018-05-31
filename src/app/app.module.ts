@@ -10,6 +10,7 @@ import { PersonaComponent } from './persona/persona.component';
 import { PersonaService } from '../app/persona/persona.service';
 import { PercentilOmsService } from '../app/percentil-oms/percentil-oms.service';
 import { ControlCrecimientoService } from '../app/control-crecimiento/control-crecimiento.service';
+import {UsuarioService} from '../app/usuario/usuario.service';
 import { PersonaCrudDialogComponent } from '../app/persona/dialogos/persona-crud-dialog.component';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpService } from '../app/core/http.service';
@@ -46,7 +47,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
   providers: [HttpService,
     ControlCrecimientoService,
     PersonaService,
-    PercentilOmsService],
+    PercentilOmsService,
+    UsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
