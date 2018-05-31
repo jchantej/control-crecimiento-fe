@@ -1,0 +1,41 @@
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
+  <div fxFlex="50%">
+    <button mat-button type="submit" mat-raised-button color="primary">Login</button>
+  </div>
+</div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
+  <div fxFlex="25%">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Icono
+          </mat-panel-title>
+          <mat-panel-description>
+            Registrate
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!--Dwesde Aqui el formulario de registro-->
+
+        <div class="example-container ">
+          <mat-form-field>
+            <input matInput placeholder="Usuario">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Contraseña">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Correo">
+          </mat-form-field>
+
+          <button mat-button type="submit" mat-raised-button color="primary">Registrar</button>
+        </div>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+</div>
