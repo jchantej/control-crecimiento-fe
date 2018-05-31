@@ -14,7 +14,7 @@ import { isNull } from 'util';
 export class InicioComponent implements OnInit {
 
   usuario: Usuario;
-  correo = new FormControl('', [Validators.required, Validators.email]);
+  correo = new FormControl('', [Validators.required]);
   registroForm: FormGroup;
   constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
@@ -34,7 +34,9 @@ export class InicioComponent implements OnInit {
       correo: ['', Validators.required]
     });
   }
-
+  get correoActual() {
+    return this.registroForm.get('correo');
+  }
 
   registrar() {
 
