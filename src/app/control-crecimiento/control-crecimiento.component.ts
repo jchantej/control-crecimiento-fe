@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class ControlCrecimientoComponent implements OnInit {
   tipo: any;
+  userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
   displayedColumns = ['fecha', 'edad', 'edadPeriodo', 'peso', 'talla', 'actionsColumn'];
   selectedPersona: Persona;
@@ -39,6 +40,15 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   ngOnInit() {
 
+
+    this.userSession = JSON.parse(localStorage.getItem(AuthService.tokenKey));
+    //TODO:Pendiente de mejorar la parte control de la session
+    if (this.userSession !== null) {
+      this.authService.loggedIn.next(true);
+    } else {
+      this.authService.logout();
+    }
+
     this.getPersonas();
     this.createForm();
 
@@ -60,7 +70,7 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   getPersonas() {
     //TODO: se debe pasar el id usuario
-    this.personaService.getListaPersonas(1).subscribe(
+    this.personaService.getListaPersonas(this.userSession.id).subscribe(
       persona => this.personas = persona
     );
   }

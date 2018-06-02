@@ -25,7 +25,9 @@ export class CabeceraComponent implements OnInit {
     //TODO: pendiente de enviar todo el toquen
     this.authService.loggedIn.subscribe(token => {
       this.tokenValue = JSON.parse(localStorage.getItem(AuthService.tokenKey));
-      console.log(this.tokenValue);
+      if (this.tokenValue === null) {
+        this.router.navigate(['/inicio']);
+      }
       this.loginIn = token;
     });
   }

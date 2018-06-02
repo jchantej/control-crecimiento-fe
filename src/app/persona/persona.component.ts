@@ -18,6 +18,14 @@ export class PersonaComponent implements OnInit {
   }
 
   ngOnInit() {
+  /*  this.userSession = JSON.parse(localStorage.getItem(AuthService.tokenKey));
+    //TODO:Pendiente de mejorar la parte control de la session
+    if (this.userSession !== null) {
+      this.authService.loggedIn.next(true);
+    } else {
+      this.authService.logout();
+    }*/
+
     this.sincronizarData();
 
   }
