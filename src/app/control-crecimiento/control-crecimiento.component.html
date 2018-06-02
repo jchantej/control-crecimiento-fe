@@ -6,7 +6,7 @@
           <img matListAvatar src="https://scontent.fmad8-1.fna.fbcdn.net/v/t1.0-9/19510451_10213341195146988_8076940860224184211_n.jpg?_nc_cat=0&oh=c9c5f0550befb3c17547a59537abf9d8&oe=5BC2FD53"
             alt="foto">
           <h2 matLine> {{persona.nombre}} {{persona.apellido}} </h2>
-          <p mat-line> nacido: {{persona.fechaNacimiento| date}} </p>
+          <p mat-line> nacido: {{persona.fechaNacimiento | date }} </p>
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-nav-list>
@@ -18,7 +18,7 @@
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
           <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
-          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento }}</p>
+          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento | date}}</p>
           <p>Edad actual: {{selectedPersona.edadPeriodo}}</p>
           <p>Genero: {{selectedPersona.genero}}</p>
         </div>
@@ -26,11 +26,11 @@
           Agregar control
           <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container ">
             <mat-form-field>
-              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
+              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" >
               <mat-error>Debe ingresar un peso</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
+              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" >
               <mat-error>debe ingresar una talla</mat-error>
             </mat-form-field>
             <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
@@ -104,7 +104,7 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+        <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
         </mat-paginator>
       </div>
     </div>
