@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { PersonaService } from '../../persona/persona.service';
 import { Persona } from '../../persona/persona.model';
+
 @Component({
     styleUrls: ['./persona-crud-dialog.component.css'],
     templateUrl: './persona-crud-dialog.component.html'
@@ -35,12 +36,14 @@ export class PersonaCrudDialogComponent implements OnInit {
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<PersonaCrudDialogComponent>,
         private snackBar: MatSnackBar,
-        @Inject(MAT_DIALOG_DATA) private data,
+ 
+        @Inject(MAT_DIALOG_DATA) private data
     ) {
         this.createForm();
     }
 
     ngOnInit(): void {
+
         this.changeStateControls();
     }
 
