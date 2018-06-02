@@ -19,6 +19,9 @@ import { ChartsModule } from 'ng2-charts';
 import { PercentilOmsComponent } from './percentil-oms/percentil-oms.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthService } from './servicios/auth.service';
+import { CabeceraComponent } from './cabecera/cabecera.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
     ControlCrecimientoComponent,
     PercentilOmsComponent,
     InicioComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    CabeceraComponent
 
   ],
   imports: [
@@ -41,14 +45,16 @@ import { UsuarioComponent } from './usuario/usuario.component';
     AppMaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    JsonpModule
+    JsonpModule,
+    AppRoutingModule
   ],
   entryComponents: [PersonaCrudDialogComponent],
   providers: [HttpService,
     ControlCrecimientoService,
     PersonaService,
     PercentilOmsService,
-    UsuarioService],
+    UsuarioService,
+    AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

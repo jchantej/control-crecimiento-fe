@@ -4,33 +4,33 @@
       <mat-nav-list>
         <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="selectedPersona = persona; sincronizarData();">
           <img matListAvatar src="https://scontent.fmad8-1.fna.fbcdn.net/v/t1.0-9/19510451_10213341195146988_8076940860224184211_n.jpg?_nc_cat=0&oh=c9c5f0550befb3c17547a59537abf9d8&oe=5BC2FD53"
-            alt="yo">
+            alt="foto">
           <h2 matLine> {{persona.nombre}} {{persona.apellido}} </h2>
-          <p mat-line> nacido: {{persona.fechaNacimiento| date}} </p>
+          <p mat-line> nacido: {{persona.fechaNacimiento | date }} </p>
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-nav-list>
     </div>
     <div fxFlex="70%">
-      <div fxLayout="row" fxLayoutWrap>
-        <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50">
+      <div fxLayout="row" fxLayoutWrap >
+        <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50" >
           Aqui la foto
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
           <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
-          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento |date}}</p>
+          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento | date}}</p>
           <p>Edad actual: {{selectedPersona.edadPeriodo}}</p>
-          <p>genero: {{selectedPersona.genero}}</p>
+          <p>Genero: {{selectedPersona.genero}}</p>
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40">
           Agregar control
           <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container ">
             <mat-form-field>
-              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
+              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" >
               <mat-error>Debe ingresar un peso</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
+              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" >
               <mat-error>debe ingresar una talla</mat-error>
             </mat-form-field>
             <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
@@ -40,9 +40,10 @@
 
       <mat-divider></mat-divider>
       <div fxLayout="row" fxFlex="100">
-        <mat-radio-group name="opTipos" fxLayout="row" fxLayoutAlign="center">
-          <mat-radio-button *ngFor="let tipo of tipos" [checked]="tipo.checked" [value]="tipo.value" (change)="onSelectionChange(tipo)"
-            name="opTipos">{{tipo.viewValue}}
+        <mat-radio-group name="opTipos">
+          <mat-radio-button  class="example-radio-button" *ngFor="let tipo of tipos" [checked]="tipo.checked" [value]="tipo.value" (change)="onSelectionChange(tipo)"
+            name="opTipos">
+            {{tipo.viewValue}}
           </mat-radio-button>
         </mat-radio-group>
         <mat-divider></mat-divider>
@@ -76,12 +77,6 @@
             <mat-cell *matCellDef="let control"> {{control.edad}} </mat-cell>
           </ng-container>
 
-          <!-- Description Column -->
-          <ng-container matColumnDef="edadPeriodo">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(período) </mat-header-cell>
-            <mat-cell *matCellDef="let control"> {{control.edadPeriodo}} </mat-cell>
-          </ng-container>
-
           <ng-container matColumnDef="peso">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Peso(Kg) </mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.peso}} </mat-cell>
@@ -109,12 +104,12 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+        <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
         </mat-paginator>
       </div>
     </div>
     <div fxFlex="10%" class="persona-container-list">
-      aqui algo
+      Informacion referen a los colores de las curvas de crecimiento
     </div>
   </div>
 </div>

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Usuario } from '../usuario/usuario.model';
 import { UsuarioService } from '../usuario/usuario.service';
+import { AuthService } from '../servicios/auth.service';
 import { MatSnackBar } from '@angular/material';
-import { isNull } from 'util';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,13 +13,16 @@ import { isNull } from 'util';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-
+  userName: string;
+  userPassword: string;
   usuario: Usuario;
   correo = new FormControl('', [Validators.required]);
   registroForm: FormGroup;
   constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private authService: AuthService) { }
 
   ngOnInit() {
     if (!this.usuario) {
@@ -38,6 +42,15 @@ export class InicioComponent implements OnInit {
     return this.registroForm.get('correo');
   }
 
+  autenticar() {
+    if (this.userName && this.userPassword) {
+      this.authService.login(this.userName, this.userPassword);
+    } else {
+      this.openSnackBar('Faltan datos', 'debe ingresar usuario y password');
+    }
+
+  }
+
   registrar() {
 
     if (this.registroForm.valid) {
@@ -48,7 +61,6 @@ export class InicioComponent implements OnInit {
             this.usuarioService.crear(this.registroMapData()).subscribe(
               () => {
                 this.openSnackBar('OK.!', 'Usuario registrado correctamente');
-                // this.sincronizarData();
               },
               error => {
                 this.openSnackBar('UPS!!!', 'Intentelo mas tarde');

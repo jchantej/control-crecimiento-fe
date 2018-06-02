@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <span>PFM</span>
+  <div fxLayout="row" fxLayoutAlign="end">
+    <a *ngIf="loginIn" mat-button  [routerLink]="['/control']">
+      <mat-icon>timeline</mat-icon>
+      <span>Controles</span>
+    </a>
+    <a *ngIf="loginIn" mat-button  [routerLink]="['/persona']">
+      <mat-icon>child_care</mat-icon>
+      <span>Mis Nin@s</span>   
+</a>
+  </div>
+  <span fxFlex></span>
+  <span >Bienvenido {{tokenValue.usuario}} |</span>
+  <button *ngIf="loginIn" mat-icon-button [mat-menu-trigger-for]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Mi perfil</span>
+    </button>
+    <button mat-menu-item (click)="salir()">
+      <mat-icon>settings_power</mat-icon>
+      <span>Salir</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>
+<router-outlet></router-outlet>
