@@ -11,7 +11,7 @@
 </a>
   </div>
   <span fxFlex></span>
-  <span >Bienvenido {{tokenValue.usuario}} |</span>
+  <span *ngIf="loginIn">Bienvenido {{tokenValue.usuario}} |</span>
   <button *ngIf="loginIn" mat-icon-button [mat-menu-trigger-for]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>
