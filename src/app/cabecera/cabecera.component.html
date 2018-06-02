@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <span>PFM</span>
+  <div fxLayout="row" fxLayoutAlign="end">
+    <a *ngIf="loginIn" mat-button fxFlex="40" [routerLink]="['/control']">Controles</a>
+    <a *ngIf="loginIn" mat-button fxFlex="40" [routerLink]="['/persona']">Mis Nin@s</a>
+  </div>
+  <span class="fill-remaining-space"> </span>
+  <button *ngIf="loginIn" mat-icon-button [mat-menu-trigger-for]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item>Mi Perfil</button>
+    <button mat-menu-item (click)="salir();">Salir</button>
+  </mat-menu>
+
+</mat-toolbar>
+<router-outlet></router-outlet>

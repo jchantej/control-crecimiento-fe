@@ -6,6 +6,8 @@ import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { PercentilOmsComponent } from '../percentil-oms/percentil-oms.component';
 import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
+import { AuthService } from '../servicios/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-control-crecimiento',
@@ -29,11 +31,14 @@ export class ControlCrecimientoComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private controlCrecimientoService: ControlCrecimientoService,
     private personaService: PersonaService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private router: Router) {
 
     this.selectedPersona = { nombre: '', apellido: '', fechaNacimiento: new Date(), genero: '', grupoSanguineo: '', idUsuario: 0 }
   }
   ngOnInit() {
+
     this.getPersonas();
     this.createForm();
 
@@ -44,7 +49,7 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   getControlesCrecimiento() {
     if (this.tipo === undefined) {
-      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true'} 
+      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true' }
     }
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {

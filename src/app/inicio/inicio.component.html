@@ -1,10 +1,19 @@
 <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
-  <div fxFlex="50%">
-    <button mat-button type="submit" mat-raised-button color="primary">Login</button>
+  <div fxFlex="25%" class="example-container">
+    <h2>Login</h2>
+    <mat-form-field>
+      <input class="form-control" [(ngModel)]="userName" matInput placeholder="Usuario" type="text" required>
+      <mat-error>Debe ingresar un usuario</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input class="form-control" [(ngModel)]="userPassword" matInput placeholder="Contraseña" type="password" required>
+      <mat-error>debe ingresar una contraseña</mat-error>
+    </mat-form-field>
+    <button mat-button (click)="autenticar()" mat-raised-button color="primary">Ingresar</button>
   </div>
 </div>
 <br>
-<mat-divider></mat-divider>
+<mat-divider></mat-divider> 
 <br>
 <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
   <div fxFlex="25%">
@@ -12,7 +21,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-              <mat-icon>person</mat-icon>
+            <mat-icon>person</mat-icon>
           </mat-panel-title>
           <mat-panel-description>
             Registrate
@@ -28,7 +37,8 @@
             <mat-error>debe ingresar una contraseña</mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  required>
+            <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+              required>
             <mat-error *ngIf="correoActual.invalid && (correoActual.dirty || correoActual.touched)">correo invalido</mat-error>
           </mat-form-field>
           <button mat-button type="submit" mat-raised-button color="primary">Registrar</button>
