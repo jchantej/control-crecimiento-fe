@@ -2,7 +2,7 @@ export interface Persona {
     id?: number;
     nombre: string;
     apellido: string;
-    fechaNacimiento: Date;
+    fechaNacimiento?: Date;
     edadDias?: number;
     periodoEdad?: string;
     genero: string;

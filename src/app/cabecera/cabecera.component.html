@@ -2,7 +2,7 @@
   <span>PFM</span>
   <div fxLayout="row" fxLayoutAlign="end">
     <a *ngIf="loginIn" mat-button  [routerLink]="['/control']">
-      <mat-icon>show_chart</mat-icon>
+      <mat-icon>timeline</mat-icon>
       <span>Controles</span>
     </a>
     <a *ngIf="loginIn" mat-button  [routerLink]="['/persona']">
@@ -11,7 +11,7 @@
 </a>
   </div>
   <span fxFlex></span>
-  <span  *ngIf="loginIn">Bienvenido {{tokenValue.usuario}} |</span>
+  <span >Bienvenido {{tokenValue.usuario}} |</span>
   <button *ngIf="loginIn" mat-icon-button [mat-menu-trigger-for]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>
@@ -21,7 +21,7 @@
       <span>Mi perfil</span>
     </button>
     <button mat-menu-item (click)="salir()">
-      <mat-icon>input</mat-icon>
+      <mat-icon>settings_power</mat-icon>
       <span>Salir</span>
     </button>
   </mat-menu>

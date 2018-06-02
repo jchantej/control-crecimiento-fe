@@ -18,7 +18,7 @@ export class ControlCrecimientoComponent implements OnInit {
   tipo: any;
   userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
-  displayedColumns = ['fecha', 'edad', 'edadPeriodo', 'peso', 'talla', 'actionsColumn'];
+  displayedColumns = ['fecha', 'edad', 'peso', 'talla', 'actionsColumn'];
   selectedPersona: Persona;
   personas: Persona[];
   controlForm: FormGroup;
@@ -36,7 +36,7 @@ export class ControlCrecimientoComponent implements OnInit {
     private authService: AuthService,
     private router: Router) {
 
-    this.selectedPersona = { nombre: '', apellido: '', fechaNacimiento: new Date(), genero: '', grupoSanguineo: '', idUsuario: 0 }
+    this.selectedPersona = { nombre: '', apellido: '', genero: '', grupoSanguineo: '', idUsuario: 0 }
   }
   ngOnInit() {
 
@@ -69,7 +69,6 @@ export class ControlCrecimientoComponent implements OnInit {
     );
   }
   getPersonas() {
-    //TODO: se debe pasar el id usuario
     this.personaService.getListaPersonas(this.userSession.id).subscribe(
       persona => this.personas = persona
     );
@@ -93,17 +92,23 @@ export class ControlCrecimientoComponent implements OnInit {
   }
 
   public onSubmit() {
-    if (!this.controlForm.invalid) {
-      this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
-        () => {
-          this.openSnackBar('OK.!', 'Control agregado correctamente');
-          this.sincronizarData();
-        },
-        error => {
-          this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
-        }
-      );
+    if (this.selectedPersona.nombre) {
+      if (!this.controlForm.invalid) {
+        this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
+          () => {
+            this.openSnackBar('OK.!', 'Control agregado correctamente');
+            this.sincronizarData();
+          },
+          error => {
+            this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
+          }
+        );
+      }
+
+    } else {
+      this.openSnackBar('Selecionar:!!!', 'Debe seleccionar un niño de su lista');
     }
+
   }
 
   openSnackBar(title: string, message: string) {
@@ -114,7 +119,6 @@ export class ControlCrecimientoComponent implements OnInit {
 
   onSelectionChange(tipo) {
     this.tipo = tipo;
-    // console.log(this.tipo);
     this.sincronizarData();
 
   }
