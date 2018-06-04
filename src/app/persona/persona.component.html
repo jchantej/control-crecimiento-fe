@@ -50,10 +50,10 @@
       <ng-container matColumnDef="actionsColumn">
         <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
         <mat-cell *matCellDef="let item">
-          <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
+          <button matTooltip="Ver" mat-icon-button (click)="prepareUpdate(item)">
             <mat-icon>info_outline</mat-icon>
           </button>
-          <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item.id)">
+          <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item)">
             <mat-icon>create</mat-icon>
           </button>
           <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="delete(item.id)">

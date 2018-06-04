@@ -4,12 +4,15 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { PersonaService } from '../../persona/persona.service';
 import { Persona } from '../../persona/persona.model';
+import { AuthService } from '../../servicios/auth.service';
 
 @Component({
     styleUrls: ['./persona-crud-dialog.component.css'],
     templateUrl: './persona-crud-dialog.component.html'
 })
 export class PersonaCrudDialogComponent implements OnInit {
+    userSession: any;
+    persona: Persona;
     personaForm: FormGroup;
     visibleButtonCreate = false;
     visibleButtonUpdate = false;
@@ -36,25 +39,26 @@ export class PersonaCrudDialogComponent implements OnInit {
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<PersonaCrudDialogComponent>,
         private snackBar: MatSnackBar,
- 
+        private authService: AuthService,
         @Inject(MAT_DIALOG_DATA) private data
     ) {
-        this.createForm();
+        this.persona = { nombre: '', apellido: '', genero: '', grupoSanguineo: '', foto: '', idUsuario: 0 };
     }
 
     ngOnInit(): void {
-
+        this.userSession = JSON.parse(localStorage.getItem(AuthService.tokenKey));
+        this.createForm();
         this.changeStateControls();
     }
 
     createForm() {
         this.personaForm = this.formBuilder.group({
-            nombre: '',
-            apellido: '',
-            fechaNacimiento: '',
-            genero: '',
-            grupoSanguineo: '',
-            foto: ''
+            nombre: this.data.persona ? this.data.persona.nombre : '',
+            apellido: this.data.persona ? this.data.persona.apellido : '',
+            fechaNacimiento: this.data.persona ? new Date(this.data.persona.fechaNacimiento) : '',
+            genero: this.data.persona ? this.data.persona.genero : '',
+            grupoSanguineo: this.data.persona ? this.data.persona.grupoSanguineo : '',
+            foto: this.data.persona ? this.data.persona.foto : ''
         });
     }
 
@@ -67,29 +71,46 @@ export class PersonaCrudDialogComponent implements OnInit {
             genero: formModel.genero,
             grupoSanguineo: formModel.grupoSanguineo,
             foto: formModel.foto,
-            idUsuario: 1 //TODO:  Aqui se deb setear el valor del id del usauario en sesion
+            idUsuario: this.userSession.id
         };
         return personaMap;
     }
     public onSubmit() {
-        if (!this.personaForm.invalid){
-
-            this.personaService.crear(this.personaMapData()).subscribe(
-                () => {
-                    this.dialogRef.close();
-                    if (this.data.action === 'CREATE') {
-                        this.openSnackBar('OK.!', 'Datos almacenados correctamente');
-                    } else if (this.data.action === 'UPDATE') {
-                        //TODO: para update
-                    }
-                },
-                error => {
-                    this.dialogRef.close(); //TODO: cerficar para no cerrar la ventana ante la falta de un campo en el formularios
-                    this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
-                }
-            );
-
+        if (!this.personaForm.invalid) {
+            if (this.data.action === 'CREATE') {
+                this.crearPersona(this.personaMapData());
+            } else if (this.data.action === 'UPDATE') {
+                this.editarPersona(this.data.persona.id, this.personaMapData());
+            }
         }
+    }
+    crearPersona(persona: Persona) {
+
+        this.personaService.crear(persona).subscribe(
+            () => {
+                this.dialogRef.close();
+                this.openSnackBar('OK.!', 'Datos almacenados correctamente');
+            },
+            error => {
+                this.dialogRef.close();
+                this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
+            }
+        );
+
+    }
+
+    editarPersona(id: number, persona: Persona) {
+        this.personaService.editar(id, persona).subscribe(
+            () => {
+                this.dialogRef.close();
+                this.openSnackBar('OK.!', 'Datos actualizados correctamente');
+            },
+            error => {
+                this.dialogRef.close();
+                this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+            }
+        );
+
     }
 
     changeStateControls() {

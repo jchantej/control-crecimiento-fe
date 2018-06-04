@@ -18,4 +18,8 @@ export class PersonaService {
     return this.httpService.post(PersonaService.PERSONAS, persona);
   }
 
+  editar(id: number, persona: Persona): Observable<any> {
+    return this.httpService.put(PersonaService.PERSONAS + '/' + id, persona);
+  }
+
 }
