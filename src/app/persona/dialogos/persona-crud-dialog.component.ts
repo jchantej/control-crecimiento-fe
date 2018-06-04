@@ -80,7 +80,7 @@ export class PersonaCrudDialogComponent implements OnInit {
             if (this.data.action === 'CREATE') {
                 this.crearPersona(this.personaMapData());
             } else if (this.data.action === 'UPDATE') {
-                this.actualizarPersona(this.personaForm.value.id, this.personaMapData());
+                this.editarPersona(this.data.persona.id, this.personaMapData());
             }
         }
     }
@@ -92,28 +92,26 @@ export class PersonaCrudDialogComponent implements OnInit {
                 this.openSnackBar('OK.!', 'Datos almacenados correctamente');
             },
             error => {
-                this.dialogRef.close(); //TODO: cerficar para no cerrar la ventana ante la falta de un campo en el formularios
+                this.dialogRef.close();
                 this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
             }
         );
 
     }
 
-    actualizarPersona(id: number, persona: Persona) {
-
-        this.personaService.crear(persona).subscribe(
+    editarPersona(id: number, persona: Persona) {
+        this.personaService.editar(id, persona).subscribe(
             () => {
                 this.dialogRef.close();
                 this.openSnackBar('OK.!', 'Datos actualizados correctamente');
             },
             error => {
-                this.dialogRef.close(); //TODO: cerficar para no cerrar la ventana ante la falta de un campo en el formularios
+                this.dialogRef.close();
                 this.openSnackBar('UPS!!!', 'Intentelo más tarde');
             }
         );
 
     }
-
 
     changeStateControls() {
         if (this.data.action === 'CREATE') {
