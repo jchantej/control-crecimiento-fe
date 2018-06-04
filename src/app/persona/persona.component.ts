@@ -18,6 +18,7 @@ export class PersonaComponent implements OnInit {
     private personaDialogMat: MatDialog,
     private authService: AuthService) {
 
+
   }
 
   ngOnInit() {
@@ -44,10 +45,14 @@ export class PersonaComponent implements OnInit {
     this.openDialog(0, 'CREATE');
   }
 
-  openDialog(idPersona?: number, action?: string) {
+  prepareUpdate(item) {
+    this.openDialog( item, 'UPDATE');
+  }
+
+  openDialog(item?: number, action?: string) {
     this.personaDialogRef = this.personaDialogMat.open(PersonaCrudDialogComponent, {
       data: {
-        idPersona: idPersona,
+        persona: item,
         action: action
       }
     });
