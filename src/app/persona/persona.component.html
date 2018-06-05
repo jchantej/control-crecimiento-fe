@@ -1,69 +1,69 @@
 <p>
-    Listado de Niñ@s
+  Listado de Niñ@s
 </p>
 
 <div class="persona-container mat-elevation-z8">
 
-    <div class="persona-header">
-      <button matTooltip="Agregar Nuevo" mat-raised-button color="primary" (click)="prepareCreate()">
-        <mat-icon>person_add</mat-icon>
-      </button>
-    </div>
-    <div class="persona-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
-      </mat-form-field>
-    </div>
-    <mat-table #table [dataSource]="dataSourcePersonas" matSort>
-      <!-- Id Column -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Id. </mat-header-cell>
-        <mat-cell *matCellDef="let persona"> {{persona.id}} </mat-cell>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="nombre">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
-        <mat-cell *matCellDef="let persona"> {{persona.nombre}} </mat-cell>
-      </ng-container>
-  
-      <!-- Description Column -->
-      <ng-container matColumnDef="apellido">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
-        <mat-cell *matCellDef="let persona"> {{persona.apellido}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="genero">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Género </mat-header-cell>
-        <mat-cell *matCellDef="let persona"> {{persona.genero}} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="fechaNacimiento">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha nacimiento </mat-header-cell>
-        <mat-cell *matCellDef="let persona"> {{persona.fechaNacimiento | date : 'dd/MM/yyyy'}} </mat-cell>
-      </ng-container>
-  
-  
-  
-  
-      <!-- Acciones-->
-      <ng-container matColumnDef="actionsColumn">
-        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-        <mat-cell *matCellDef="let item">
-          <button matTooltip="Ver" mat-icon-button (click)="prepareUpdate(item)">
-            <mat-icon>info_outline</mat-icon>
-          </button>
-          <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item)">
-            <mat-icon>create</mat-icon>
-          </button>
-          <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="prepareDelete(item)">
-            <mat-icon>remove_circle</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-    </mat-paginator>
+  <div class="persona-header">
+    <button matTooltip="Agregar Nuevo" mat-raised-button color="primary" (click)="prepareCreate()">
+      <mat-icon>person_add</mat-icon>
+    </button>
   </div>
+  <div class="persona-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSourcePersonas" matSort>
+    <!-- Id Column -->
+    <ng-container matColumnDef="id" ng-disabled="false">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Id. </mat-header-cell>
+      <mat-cell *matCellDef="let persona"> {{persona.id}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let persona"> {{persona.nombre}} </mat-cell>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="apellido">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+      <mat-cell *matCellDef="let persona"> {{persona.apellido}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="genero">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Género </mat-header-cell>
+      <mat-cell *matCellDef="let persona"> {{persona.genero}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaNacimiento">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha nacimiento </mat-header-cell>
+      <mat-cell *matCellDef="let persona"> {{persona.fechaNacimiento | date : 'dd/MM/yyyy'}} </mat-cell>
+    </ng-container>
+
+
+
+
+    <!-- Acciones-->
+    <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+      <mat-cell *matCellDef="let item">
+        <button matTooltip="Ver" mat-icon-button (click)="prepareUpdate(item)">
+          <mat-icon>info_outline</mat-icon>
+        </button>
+        <button matTooltip="Editar" mat-icon-button color="primary" (click)="prepareUpdate(item)">
+          <mat-icon>create</mat-icon>
+        </button>
+        <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="prepareDelete(item)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
