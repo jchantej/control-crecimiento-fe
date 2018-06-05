@@ -12,8 +12,6 @@ export class CabeceraComponent implements OnInit {
   // loginIn: Observable<boolean>;
   tokenValue: any;
   loginIn = false;
-  usuario: string;
-  usuarioId: number;
   rol: string;
 
   //token = JSON.parse(localStorage.getItem(AuthService.tokenKey));
@@ -34,7 +32,6 @@ export class CabeceraComponent implements OnInit {
 
   salir() {
     this.authService.logout();
-    this.router.navigate(['/inicio']);
   }
 
 }
