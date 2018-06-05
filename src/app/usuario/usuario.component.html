@@ -1,3 +1,49 @@
-<p>
-  usuario works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
+  <div fxFlex="25%" class="example-container">
+    <mat-card>
+      <mat-card-content>
+        <h2 class="example-h2" color="primary">Perfil</h2>
+        <mat-tab-group class="demo-tab-group">
+          <mat-tab label="Información">
+            <div class="demo-tab-content">
+              <mat-card class="example-card">
+                <mat-card-header>
+                  <mat-card-title>Usuario</mat-card-title>
+                  <mat-card-subtitle>{{this.usuario.username}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="https://scontent.fmad8-1.fna.fbcdn.net/v/t1.0-9/19510451_10213341195146988_8076940860224184211_n.jpg?_nc_cat=0&oh=c9c5f0550befb3c17547a59537abf9d8&oe=5BC2FD53"
+                  alt="Perfil">
+                <mat-card-content>
+                  <p>
+                    <strong> Nombres y Apellidos: </strong>
+                    {{this.usuario.nombre}} {{this.usuario.apellido}}
+                  </p>
+                  <p>
+                    <strong>Correo: </strong>
+                    {{this.usuario.correo}}
+                  </p>
+                </mat-card-content>
+                <mat-card-actions>
+
+                  <button matTooltip="Editar" mat-button color="primary">
+                    <span>Editar</span>
+                    <mat-icon>mode_edit</mat-icon>
+                  </button>
+                  <button mat-button mat-button color="primary">
+                    <span>Eliminar</span>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="Editar">
+            <div class="demo-tab-content">
+              Formulario para editar
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

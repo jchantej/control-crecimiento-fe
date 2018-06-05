@@ -54,6 +54,7 @@ export class AuthService {
     localStorage.removeItem(AuthService.tokenKey);
     console.log(localStorage.getItem('token'));
     this.loggedIn.next(false);
+    this.router.navigate(['/inicio']);
   }
 
 }

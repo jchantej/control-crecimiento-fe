@@ -3,9 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from '../app/inicio/inicio.component';
 import { ControlCrecimientoComponent } from '../app/control-crecimiento/control-crecimiento.component';
 import { PersonaComponent } from '../app/persona/persona.component';
-
-
-
+import { UsuarioComponent } from '../app/usuario/usuario.component';
 
 const appRoutes: Routes = [
   {
@@ -19,6 +17,9 @@ const appRoutes: Routes = [
   },
   {
     path: 'persona', component: PersonaComponent
+  },
+  {
+    path: 'perfil', component: UsuarioComponent
   }
 ];
 @NgModule({
