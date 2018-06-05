@@ -16,8 +16,10 @@ export class PersonaCrudDialogComponent implements OnInit {
     personaForm: FormGroup;
     visibleButtonCreate = false;
     visibleButtonUpdate = false;
+    visibleButtonDelete = false;
     buttonNameOKCancel = 'Cancelar';
     title: string;
+    message: string;
     generos = [
         { value: 'M', viewValue: 'Masculino' },
         { value: 'F', viewValue: 'Feminino' }
@@ -60,6 +62,10 @@ export class PersonaCrudDialogComponent implements OnInit {
             grupoSanguineo: this.data.persona ? this.data.persona.grupoSanguineo : '',
             foto: this.data.persona ? this.data.persona.foto : ''
         });
+
+        if (this.data.action === 'DELETE' || this.data.action === 'READ') {
+            this.personaForm.disable();
+        }
     }
 
     private personaMapData(): Persona {
@@ -81,10 +87,12 @@ export class PersonaCrudDialogComponent implements OnInit {
                 this.crearPersona(this.personaMapData());
             } else if (this.data.action === 'UPDATE') {
                 this.editarPersona(this.data.persona.id, this.personaMapData());
+            } else if (this.data.action === 'DELETE') {
+                this.eliminarPersona(this.data.persona.id);
             }
         }
     }
-    crearPersona(persona: Persona) {
+   private crearPersona(persona: Persona) {
 
         this.personaService.crear(persona).subscribe(
             () => {
@@ -99,7 +107,7 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     }
 
-    editarPersona(id: number, persona: Persona) {
+   private editarPersona(id: number, persona: Persona) {
         this.personaService.editar(id, persona).subscribe(
             () => {
                 this.dialogRef.close();
@@ -113,22 +121,46 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     }
 
-    changeStateControls() {
+    private eliminarPersona(id: number) {
+        this.personaService.eliminar(id).subscribe(
+            () => {
+                this.dialogRef.close();
+                this.openSnackBar('OK.!', 'Datos eliminados correctamente');
+            },
+            error => {
+                this.dialogRef.close();
+                this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+            }
+        );
+
+    }
+
+  private  changeStateControls() {
         if (this.data.action === 'CREATE') {
             this.title = 'Crear Niño';
             this.visibleButtonCreate = true;
             this.visibleButtonUpdate = false;
+            this.visibleButtonDelete = false;
             this.buttonNameOKCancel = 'Cancelar';
         } else if (this.data.action === 'READ') {
             this.title = 'Información Niñ@';
             this.visibleButtonCreate = false;
             this.visibleButtonUpdate = false;
+            this.visibleButtonDelete = false;
             this.buttonNameOKCancel = 'Aceptar';
         } else if (this.data.action === 'UPDATE') {
             this.title = 'Editar Nin@';
-            this.visibleButtonCreate = false;
             this.visibleButtonUpdate = true;
+            this.visibleButtonCreate = false;
+            this.visibleButtonDelete = false;
             this.buttonNameOKCancel = 'Cancelar';
+        } else if (this.data.action === 'DELETE') {
+            this.title = 'Dar de baja Nin@';
+            this.visibleButtonDelete = true;
+            this.visibleButtonUpdate = false;
+            this.visibleButtonCreate = false;
+            this.buttonNameOKCancel = 'Cancelar';
+            this.message = 'Seguro que desea Eliminar al Nin@...?';
         } else {
             console.log('Opciones no contempladas');
         }
