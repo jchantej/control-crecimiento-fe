@@ -22,4 +22,9 @@ export class PersonaService {
     return this.httpService.put(PersonaService.PERSONAS + '/' + id, persona);
   }
 
+  eliminar(id: number): Observable<any> {
+    return this.httpService.delete(PersonaService.PERSONAS + '/' + id);
+  }
+
+
 }

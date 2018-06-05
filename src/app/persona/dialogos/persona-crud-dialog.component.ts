@@ -88,12 +88,11 @@ export class PersonaCrudDialogComponent implements OnInit {
             } else if (this.data.action === 'UPDATE') {
                 this.editarPersona(this.data.persona.id, this.personaMapData());
             } else if (this.data.action === 'DELETE') {
-                this.personaForm.disable();
-                //this.editarPersona(this.data.persona.id);
+                this.eliminarPersona(this.data.persona.id);
             }
         }
     }
-    crearPersona(persona: Persona) {
+   private crearPersona(persona: Persona) {
 
         this.personaService.crear(persona).subscribe(
             () => {
@@ -108,7 +107,7 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     }
 
-    editarPersona(id: number, persona: Persona) {
+   private editarPersona(id: number, persona: Persona) {
         this.personaService.editar(id, persona).subscribe(
             () => {
                 this.dialogRef.close();
@@ -122,7 +121,21 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     }
 
-    changeStateControls() {
+    private eliminarPersona(id: number) {
+        this.personaService.eliminar(id).subscribe(
+            () => {
+                this.dialogRef.close();
+                this.openSnackBar('OK.!', 'Datos eliminados correctamente');
+            },
+            error => {
+                this.dialogRef.close();
+                this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+            }
+        );
+
+    }
+
+  private  changeStateControls() {
         if (this.data.action === 'CREATE') {
             this.title = 'Crear Niño';
             this.visibleButtonCreate = true;
