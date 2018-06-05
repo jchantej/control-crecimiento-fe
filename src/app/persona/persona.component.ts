@@ -13,9 +13,9 @@ export class PersonaComponent implements OnInit {
   userSession: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSourcePersonas: MatTableDataSource<Persona>;
-  displayedColumns = ['id', 'nombre', 'apellido', 'genero', 'fechaNacimiento', 'actionsColumn'];
+  displayedColumns = ['nombre', 'apellido', 'genero', 'fechaNacimiento', 'actionsColumn'];
   personaDialogRef: MatDialogRef<PersonaCrudDialogComponent>;
-
+  hiddenElment = false;
   constructor(private personaService: PersonaService,
     private personaDialogMat: MatDialog,
     private authService: AuthService) {
@@ -62,6 +62,11 @@ export class PersonaComponent implements OnInit {
   prepareDelete(item) {
     this.openDialog(item, 'DELETE');
   }
+
+  prepareRead(item) {
+    this.openDialog(item, 'READ');
+  }
+
 
   openDialog(item?: number, action?: string) {
     this.personaDialogRef = this.personaDialogMat.open(PersonaCrudDialogComponent, {
