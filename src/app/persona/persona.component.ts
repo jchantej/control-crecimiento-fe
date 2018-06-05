@@ -13,9 +13,9 @@ export class PersonaComponent implements OnInit {
   userSession: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSourcePersonas: MatTableDataSource<Persona>;
-  displayedColumns = ['id', 'nombre', 'apellido', 'genero', 'fechaNacimiento', 'actionsColumn'];
+  displayedColumns = ['nombre', 'apellido', 'genero', 'fechaNacimiento', 'actionsColumn'];
   personaDialogRef: MatDialogRef<PersonaCrudDialogComponent>;
-
+  hiddenElment = false;
   constructor(private personaService: PersonaService,
     private personaDialogMat: MatDialog,
     private authService: AuthService) {

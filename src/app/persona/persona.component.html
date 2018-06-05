@@ -15,19 +15,14 @@
     </mat-form-field>
   </div>
   <mat-table #table [dataSource]="dataSourcePersonas" matSort>
-    <!-- Id Column -->
-    <ng-container matColumnDef="id" ng-disabled="false">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Id. </mat-header-cell>
-      <mat-cell *matCellDef="let persona"> {{persona.id}} </mat-cell>
-    </ng-container>
 
-    <!-- Name Column -->
+    <!-- Nambre Column -->
     <ng-container matColumnDef="nombre">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
       <mat-cell *matCellDef="let persona"> {{persona.nombre}} </mat-cell>
     </ng-container>
 
-    <!-- Description Column -->
+    <!-- Apellido Column -->
     <ng-container matColumnDef="apellido">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
       <mat-cell *matCellDef="let persona"> {{persona.apellido}} </mat-cell>
