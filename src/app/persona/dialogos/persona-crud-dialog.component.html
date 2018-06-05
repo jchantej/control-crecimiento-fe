@@ -29,11 +29,13 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
+    <mat-error *ngIf="visibleButtonDelete">{{this.message }}</mat-error>
+<mat-divider></mat-divider>
   </div>
   <mat-dialog-actions>
     <button *ngIf="visibleButtonCreate" mat-button  type="submit" mat-raised-button color="primary">Crear</button>
     <button *ngIf="visibleButtonUpdate" mat-button type="submit" mat-raised-button color="primary">Editar</button>
+    <button *ngIf="visibleButtonDelete" mat-button type="submit" mat-raised-button color="primary">Eliminar</button>
     <button mat-button type="button" mat-dialog-close mat-raised-button color="primary">{{buttonNameOKCancel}}</button>
   </mat-dialog-actions>
 </form>

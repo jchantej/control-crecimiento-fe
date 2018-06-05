@@ -49,6 +49,10 @@ export class PersonaComponent implements OnInit {
     this.openDialog( item, 'UPDATE');
   }
 
+  prepareDelete(item) {
+    this.openDialog( item, 'DELETE');
+  }
+
   openDialog(item?: number, action?: string) {
     this.personaDialogRef = this.personaDialogMat.open(PersonaCrudDialogComponent, {
       data: {
