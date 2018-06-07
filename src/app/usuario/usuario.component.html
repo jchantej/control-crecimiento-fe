@@ -23,13 +23,9 @@
                     {{this.usuario.correo}}
                   </p>
                 </mat-card-content>
+                <mat-divider></mat-divider>
                 <mat-card-actions>
-
-                  <button matTooltip="Editar" mat-button color="primary">
-                    <span>Editar</span>
-                    <mat-icon>mode_edit</mat-icon>
-                  </button>
-                  <button mat-button mat-button color="primary">
+                  <button mat-button mat-button matTooltip="Eliminar" (click)="openDialog()" color="primary">
                     <span>Eliminar</span>
                     <mat-icon>cancel</mat-icon>
                   </button>

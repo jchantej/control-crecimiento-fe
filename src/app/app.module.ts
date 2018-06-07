@@ -22,12 +22,14 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './servicios/auth.service';
 import { CabeceraComponent } from './cabecera/cabecera.component';
+import { UsuarioDeleteDialogComponent } from './usuario/dialogos/usuario-delete-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonaComponent,
     PersonaCrudDialogComponent,
+    UsuarioDeleteDialogComponent,
     ControlCrecimientoComponent,
     PercentilOmsComponent,
     InicioComponent,
@@ -48,7 +50,7 @@ import { CabeceraComponent } from './cabecera/cabecera.component';
     JsonpModule,
     AppRoutingModule
   ],
-  entryComponents: [PersonaCrudDialogComponent],
+  entryComponents: [PersonaCrudDialogComponent, UsuarioDeleteDialogComponent ],
   providers: [HttpService,
     ControlCrecimientoService,
     PersonaService,
