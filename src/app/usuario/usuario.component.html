@@ -3,7 +3,7 @@
     <mat-card>
       <mat-card-content>
         <h2 class="example-h2" color="primary">Perfil</h2>
-        <mat-tab-group class="demo-tab-group">
+        <mat-tab-group class="demo-tab-group" (selectedTabChange)="tabActual($event)">
           <mat-tab label="Información">
             <div class="demo-tab-content">
               <mat-card class="example-card">
@@ -45,24 +45,24 @@
               <div class="example-container">
                 <h1 mat-dialog-title>Usuario</h1>
                 <mat-form-field>
-                  <input class="form-control" matInput placeholder="Usuario" type="text" required>
+                  <input class="form-control" formControlName="username" matInput placeholder="Usuario" type="text" required>
                   <mat-error>Debe ingresar un usuario</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                  <input class="form-control" matInput placeholder="Contraseña" type="password" required>
+                  <input class="form-control" formControlName="password" matInput placeholder="Contraseña" type="password" required>
                   <mat-error>debe ingresar una contraseña</mat-error>
                 </mat-form-field>
 
                 <mat-divider></mat-divider>
                 <h1 mat-dialog-title>General</h1>
                 <mat-form-field>
-                  <input matInput placeholder="Nombre" required>
+                  <input matInput formControlName="nombre" placeholder="Nombre" required>
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput placeholder="Apellido" required>
+                  <input matInput formControlName="apellido"  placeholder="Apellido" required>
                 </mat-form-field>
                 <mat-form-field>
-                    <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                    <input  matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                       required>
                   </mat-form-field>
               </div>
