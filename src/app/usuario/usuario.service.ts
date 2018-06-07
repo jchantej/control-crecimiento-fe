@@ -17,6 +17,9 @@ export class UsuarioService {
     return this.httpService.put(UsuarioService.USUARIOS + '/' + username , usuario);
   }
 
+  eliminar(username: string): Observable<any> {
+    return this.httpService.delete(UsuarioService.USUARIOS + '/' + username);
+  }
 
   getUsuario(username: string): Observable<Usuario> {
     return this.httpService.get(UsuarioService.USUARIOS + '/' + username);
