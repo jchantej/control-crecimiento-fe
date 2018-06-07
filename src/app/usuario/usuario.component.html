@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
-  <div fxFlex="25%" class="example-container">
+  <div fxFlex="30%" class="example-container">
     <mat-card>
       <mat-card-content>
         <h2 class="example-h2" color="primary">Perfil</h2>
@@ -39,8 +39,37 @@
           </mat-tab>
           <mat-tab label="Editar">
             <div class="demo-tab-content">
-              Formulario para editar
             </div>
+            <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+
+              <div class="example-container">
+                <h1 mat-dialog-title>Usuario</h1>
+                <mat-form-field>
+                  <input class="form-control" matInput placeholder="Usuario" type="text" required>
+                  <mat-error>Debe ingresar un usuario</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input class="form-control" matInput placeholder="Contraseña" type="password" required>
+                  <mat-error>debe ingresar una contraseña</mat-error>
+                </mat-form-field>
+
+                <mat-divider></mat-divider>
+                <h1 mat-dialog-title>General</h1>
+                <mat-form-field>
+                  <input matInput placeholder="Nombre" required>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Apellido" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input class="form-control" matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                      required>
+                  </mat-form-field>
+              </div>
+              <mat-dialog-actions>
+                <button mat-button type="submit" mat-raised-button color="primary">Editar</button>
+              </mat-dialog-actions>
+            </form>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
