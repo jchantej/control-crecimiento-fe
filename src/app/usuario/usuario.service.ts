@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpService } from '../core/http.service';
-import { Usuario} from './usuario.model';
+import { Usuario } from './usuario.model';
 
 @Injectable()
 export class UsuarioService {
@@ -13,8 +13,13 @@ export class UsuarioService {
     return this.httpService.post(UsuarioService.USUARIOS, usuario);
   }
 
+  editar(username: string, usuario: Usuario): Observable<any> {
+    return this.httpService.put(UsuarioService.USUARIOS + '/' + username , usuario);
+  }
+
+
   getUsuario(username: string): Observable<Usuario> {
-    return this.httpService.get(UsuarioService.USUARIOS  + '/' + username);
+    return this.httpService.get(UsuarioService.USUARIOS + '/' + username);
   }
 
 }
