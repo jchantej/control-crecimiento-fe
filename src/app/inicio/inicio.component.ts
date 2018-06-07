@@ -50,7 +50,6 @@ export class InicioComponent implements OnInit {
     }
 
   }
-
   registrar() {
 
     if (this.registroForm.valid) {
