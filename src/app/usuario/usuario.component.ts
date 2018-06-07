@@ -4,6 +4,8 @@ import { Usuario } from '../usuario/usuario.model';
 import { UsuarioService } from '../usuario/usuario.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { MatTableDataSource, MatDialog, } from '@angular/material';
+import { UsuarioDeleteDialogComponent } from './dialogos/usuario-delete-dialog.component';
 
 @Component({
   selector: 'app-usuario',
@@ -17,7 +19,8 @@ export class UsuarioComponent implements OnInit {
   constructor(private authService: AuthService,
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private usuarioDeleteDialog: MatDialog) {
     this.usuario = { username: '', password: '', correo: '' };
   }
 
@@ -109,6 +112,10 @@ export class UsuarioComponent implements OnInit {
       correo: formModel.correo
     };
     return controlMap;
+  }
+
+  openDialog(): void {
+    this.usuarioDeleteDialog.open(UsuarioDeleteDialogComponent);
   }
 
   openSnackBar(title: string, message: string) {
