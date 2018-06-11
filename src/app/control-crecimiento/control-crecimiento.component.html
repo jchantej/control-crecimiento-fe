@@ -14,7 +14,7 @@
     <div fxFlex="70%">
       <div fxLayout="row" fxLayoutWrap >
         <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50" >
-          Aqui la foto
+          <img class="imagen" [src]="selectedPersona.foto" alt="foto"  height="180" width="180">
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
           <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
