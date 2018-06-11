@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ControlCrecimiento } from './control-crecimiento.model';
 import { ControlCrecimientoService } from './control-crecimiento.service';
-import { MatSnackBar, MatTableDataSource , MatPaginator} from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material';
 import { PercentilOmsComponent } from '../percentil-oms/percentil-oms.component';
 import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./control-crecimiento.component.css']
 })
 export class ControlCrecimientoComponent implements OnInit {
+  pathFotoPersona = '../../assets/img/personas/';
   tipo: any;
   userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
@@ -78,7 +79,12 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   getPersonas() {
     this.personaService.getListaPersonas(this.userSession.id).subscribe(
-      persona => this.personas = persona
+      persona => {
+        persona.forEach(p => {
+            p.foto = this.pathFotoPersona + p.foto;
+        });
+        this.personas = persona;
+      }
     );
   }
   createForm() {
