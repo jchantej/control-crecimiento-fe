@@ -15,7 +15,14 @@
     </mat-form-field>
   </div>
   <mat-table #table [dataSource]="dataSourcePersonas" matSort>
+    <!-- Foto Column -->
+    <ng-container matColumnDef="foto">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Foto </mat-header-cell>
+      <mat-cell *matCellDef="let persona">
+        <img [src]="persona.foto" height="50" width="50" alt="foto">
 
+      </mat-cell>
+    </ng-container>
     <!-- Nambre Column -->
     <ng-container matColumnDef="nombre">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>

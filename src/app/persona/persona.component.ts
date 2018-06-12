@@ -4,6 +4,8 @@ import { PersonaService } from './persona.service';
 import { MatTableDataSource, MatDialogRef, MatDialog, MatPaginator } from '@angular/material';
 import { PersonaCrudDialogComponent } from './dialogos/persona-crud-dialog.component';
 import { AuthService } from '../servicios/auth.service';
+import { Constantes } from '../core/constantes';
+
 @Component({
   selector: 'app-persona',
   templateUrl: './persona.component.html',
@@ -13,7 +15,7 @@ export class PersonaComponent implements OnInit {
   userSession: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSourcePersonas: MatTableDataSource<Persona>;
-  displayedColumns = ['nombre', 'apellido', 'genero', 'fechaNacimiento', 'actionsColumn'];
+  displayedColumns = ['foto', 'nombre', 'apellido', 'genero', 'fechaNacimiento', 'actionsColumn'];
   personaDialogRef: MatDialogRef<PersonaCrudDialogComponent>;
   hiddenElment = false;
   constructor(private personaService: PersonaService,
@@ -39,6 +41,9 @@ export class PersonaComponent implements OnInit {
   sincronizarData() {
     this.personaService.getListaPersonas(this.userSession.id).subscribe(
       persona => {
+        persona.forEach(p => {
+          p.foto = Constantes.pathFotoPersona + p.foto;
+      });
         this.dataSourcePersonas = new MatTableDataSource<Persona>(persona);
         this.dataSourcePersonas.paginator = this.paginator;
       });
