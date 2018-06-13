@@ -20,7 +20,7 @@
               <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
                 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
                 {{progress.percentage}}%</div>
-              <mat-progress-bar class="example-margin" color="primary" mode="determinate" [value]="progress.percentage">
+              <mat-progress-bar *ngIf="currentFileUpload" class="example-margin" color="primary" mode="determinate" [value]="progress.percentage">
               </mat-progress-bar>
             </div>
             <input #fileInput type="file" style="display:none" (change)="onSelectFile($event)" />

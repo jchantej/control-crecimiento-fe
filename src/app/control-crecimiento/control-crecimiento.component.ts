@@ -8,7 +8,7 @@ import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
 import { AuthService } from '../servicios/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
+import { HttpResponse, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Constantes } from '../core/constantes';
 import { UploadFileService } from '../servicios/upload-file.service';
 
@@ -45,12 +45,10 @@ export class ControlCrecimientoComponent implements OnInit {
     private personaService: PersonaService,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private router: Router,
-    private httpClient: HttpClient,
     private uploadFileService: UploadFileService
   ) {
 
-    this.selectedPersona = { nombre: '', apellido: '', genero: '', grupoSanguineo: '', idUsuario: 0 }
+    this.selectedPersona = { nombre: '', apellido: '', genero: '', foto: Constantes.fotoDefaultNN, grupoSanguineo: '', idUsuario: 0 }
   }
   ngOnInit() {
 
@@ -61,7 +59,6 @@ export class ControlCrecimientoComponent implements OnInit {
     } else {
       this.authService.logout();
     }
-
     this.getPersonas();
     this.createForm();
     this.controlForm.disable();
@@ -73,6 +70,7 @@ export class ControlCrecimientoComponent implements OnInit {
     this.sincronizarData();
     this.disable = false;
     this.controlForm.enable();
+    this.currentFileUpload = null;
 
   }
 
@@ -81,7 +79,7 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   getControlesCrecimiento() {
     if (this.tipo === undefined) {
-      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true' }
+      this.tipo = { value: 'P', viewValue: 'Peso', checked: 'true' };
     }
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {
@@ -101,7 +99,7 @@ export class ControlCrecimientoComponent implements OnInit {
     this.personaService.getListaPersonas(this.userSession.id).subscribe(
       persona => {
         persona.forEach(p => {
-          p.foto = Constantes.pathFotoPersona + p.foto;
+          p.foto = Constantes.URIFILE + p.foto;
         });
         this.personas = persona;
       }
@@ -162,25 +160,30 @@ export class ControlCrecimientoComponent implements OnInit {
   onUpload() {
     this.progress.percentage = 0;
     this.currentFileUpload = this.selectedFiles.item(0);
-    this.uploadFileService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        this.progress.percentage = Math.round(100 * event.loaded / event.total);
-      } else if (event instanceof HttpResponse) {
-        this.selectedPersona.foto = this.currentFileUpload.name;
-        this.personaService.editar(this.selectedPersona.id, this.selectedPersona).subscribe(
-          () => {
-            this.openSnackBar('OK.!', 'Foto actualizada correctamente');
-            this.getPersonas();
-            this.sincronizarData();
-          },
-          error => {
-            this.openSnackBar('UPS!!!', 'Intentelo más tarde');
-          }
-        );
-        this.selectedPersona.foto = Constantes.pathFotoPersona + this.selectedPersona.foto;
-        this.selectedFiles = undefined;
-      }
-    });
+    this.uploadFileService.pushFileToStorage(this.currentFileUpload).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress.percentage = this.uploadFileService.calcProgressPercent(event);
+        } else if (event instanceof HttpResponse) {
+          this.selectedPersona.foto = this.currentFileUpload.name;
+          this.personaService.editar(this.selectedPersona.id, this.selectedPersona).subscribe(
+            () => {
+              this.openSnackBar('OK.!', 'Foto actualizada correctamente');
+              this.getPersonas();
+              this.sincronizarData();
+            },
+            error => {
+              this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+              console.log(error);
+            }
+          );
+          this.selectedPersona.foto = Constantes.URIFILE + this.selectedPersona.foto;
+        } else if (event instanceof HttpErrorResponse) {
+          this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+        }
+      });
+
+    this.selectedFiles = undefined;
   }
 
 

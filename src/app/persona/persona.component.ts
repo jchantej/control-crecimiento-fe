@@ -42,7 +42,7 @@ export class PersonaComponent implements OnInit {
     this.personaService.getListaPersonas(this.userSession.id).subscribe(
       persona => {
         persona.forEach(p => {
-          p.foto = Constantes.pathFotoPersona + p.foto;
+          p.foto = Constantes.URIFILE + p.foto;
       });
         this.dataSourcePersonas = new MatTableDataSource<Persona>(persona);
         this.dataSourcePersonas.paginator = this.paginator;

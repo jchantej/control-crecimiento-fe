@@ -3,5 +3,6 @@ export class Constantes {
     static generoFemenino = 'F';
     static fotoDefaultNinio = 'ninio.jpg';
     static fotoDefaultNinia = 'ninia.jpg';
-    static pathFotoPersona = 'http://localhost:8080/api/v0/file/';
+    static fotoDefaultNN = '../../assets/img/sinfoto.jpg';
+    static URIFILE = 'http://localhost:8080/api/v0/file/';
 }
