@@ -2,9 +2,8 @@
   <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
     <div fxFlex="20%" class="persona-container-list">
       <mat-nav-list>
-        <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="selectedPersona = persona; sincronizarData();">
-          <img matListAvatar [src]="persona.foto"
-            alt="foto">
+        <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="habilitarPanelControlCrecimiento(persona)">
+          <img matListAvatar [src]="persona.foto" alt="foto">
           <h2 matLine> {{persona.nombre}} {{persona.apellido}} </h2>
           <p mat-line> nacido: {{persona.fechaNacimiento | date }} </p>
           <mat-divider></mat-divider>
@@ -12,9 +11,30 @@
       </mat-nav-list>
     </div>
     <div fxFlex="70%">
-      <div fxLayout="row" fxLayoutWrap >
-        <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50" >
-          <img class="imagen" [src]="selectedPersona.foto" alt="foto"  height="180" width="180">
+      <div fxLayout="row" fxLayoutWrap>
+        <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50">
+
+          <div fxLayout="column" fxLayoutWrap>
+            <img class="imagen" [src]="selectedPersona.foto" alt="foto" height="180" width="200">
+            <div *ngIf="currentFileUpload" class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                {{progress.percentage}}%</div>
+              <mat-progress-bar class="example-margin" color="primary" mode="determinate" [value]="progress.percentage">
+              </mat-progress-bar>
+            </div>
+            <input #fileInput type="file" style="display:none" (change)="onSelectFile($event)" />
+            <button [disabled]="disable" *ngIf="!selectedFiles" matTooltip="Cambiar Imagen" mat-button color="primary" (click)="fileInput.click()"  >
+                <span>cambiar imagen</span>
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button *ngIf="selectedFiles" matTooltip="Guardar" mat-button  color="primary" (click)="onUpload()"  >
+                <span>guardar imagen</span>
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
+
+          </div>
+
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
           <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
@@ -24,24 +44,24 @@
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40">
           Agregar control
-          <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container ">
+          <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container">
             <mat-form-field>
-              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" >
+              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number">
               <mat-error>Debe ingresar un peso</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" >
+              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number">
               <mat-error>debe ingresar una talla</mat-error>
             </mat-form-field>
-            <button mat-button type="submit" mat-raised-button color="primary">Agregar</button>
+            <button [disabled]="disable" mat-button type="submit" mat-raised-button color="primary">Agregar</button>
           </form>
         </div>
       </div>
 
       <mat-divider></mat-divider>
       <div fxLayout="row" fxFlex="100">
-        <mat-radio-group name="opTipos">
-          <mat-radio-button  class="example-radio-button" *ngFor="let tipo of tipos" [checked]="tipo.checked" [value]="tipo.value" (change)="onSelectionChange(tipo)"
+        <mat-radio-group name="opTipos" [disabled]="disable">
+          <mat-radio-button class="example-radio-button" *ngFor="let tipo of tipos" [checked]="tipo.checked" [value]="tipo.value" (change)="onSelectionChange(tipo)"
             name="opTipos">
             {{tipo.viewValue}}
           </mat-radio-button>

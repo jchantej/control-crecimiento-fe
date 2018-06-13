@@ -8,6 +8,9 @@ import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
 import { AuthService } from '../servicios/auth.service';
 import { Router } from '@angular/router';
+import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
+import { Constantes } from '../core/constantes';
+import { UploadFileService } from '../servicios/upload-file.service';
 
 @Component({
   selector: 'app-control-crecimiento',
@@ -15,7 +18,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./control-crecimiento.component.css']
 })
 export class ControlCrecimientoComponent implements OnInit {
-  pathFotoPersona = '../../assets/img/personas/';
+  // pathFotoPersona = '../../assets/img/personas/';
   tipo: any;
   userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
@@ -25,6 +28,12 @@ export class ControlCrecimientoComponent implements OnInit {
   controlForm: FormGroup;
   idPersona: number;
   controlesCrecimiento: ControlCrecimiento[];
+  percentDone: number;
+  uploadSuccess: boolean;
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  progress: { percentage: number } = { percentage: 0 };
+  disable = true;
   tipos = [
     { value: 'P', viewValue: 'Peso', checked: 'true' },
     { value: 'T', viewValue: 'Talla', checked: 'false' }
@@ -36,12 +45,14 @@ export class ControlCrecimientoComponent implements OnInit {
     private personaService: PersonaService,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    private httpClient: HttpClient,
+    private uploadFileService: UploadFileService
+  ) {
 
     this.selectedPersona = { nombre: '', apellido: '', genero: '', grupoSanguineo: '', idUsuario: 0 }
   }
   ngOnInit() {
-
 
     this.userSession = JSON.parse(localStorage.getItem(AuthService.tokenKey));
     //TODO:Pendiente de mejorar la parte control de la session
@@ -53,6 +64,15 @@ export class ControlCrecimientoComponent implements OnInit {
 
     this.getPersonas();
     this.createForm();
+    this.controlForm.disable();
+
+  }
+
+  habilitarPanelControlCrecimiento(persona) {
+    this.selectedPersona = persona;
+    this.sincronizarData();
+    this.disable = false;
+    this.controlForm.enable();
 
   }
 
@@ -81,7 +101,7 @@ export class ControlCrecimientoComponent implements OnInit {
     this.personaService.getListaPersonas(this.userSession.id).subscribe(
       persona => {
         persona.forEach(p => {
-            p.foto = this.pathFotoPersona + p.foto;
+          p.foto = Constantes.pathFotoPersona + p.foto;
         });
         this.personas = persona;
       }
@@ -124,6 +144,45 @@ export class ControlCrecimientoComponent implements OnInit {
     }
 
   }
+  onSelectFile(event) {
+
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.selectedPersona.foto = event.target.result;
+      }
+
+      this.selectedFiles = event.target.files;
+    }
+  }
+
+  onUpload() {
+    this.progress.percentage = 0;
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.uploadFileService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        this.selectedPersona.foto = this.currentFileUpload.name;
+        this.personaService.editar(this.selectedPersona.id, this.selectedPersona).subscribe(
+          () => {
+            this.openSnackBar('OK.!', 'Foto actualizada correctamente');
+            this.getPersonas();
+            this.sincronizarData();
+          },
+          error => {
+            this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+          }
+        );
+        this.selectedPersona.foto = Constantes.pathFotoPersona + this.selectedPersona.foto;
+        this.selectedFiles = undefined;
+      }
+    });
+  }
+
 
   openSnackBar(title: string, message: string) {
     this.snackBar.open(title, message, {
