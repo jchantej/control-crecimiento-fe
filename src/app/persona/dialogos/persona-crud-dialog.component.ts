@@ -5,6 +5,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { PersonaService } from '../../persona/persona.service';
 import { Persona } from '../../persona/persona.model';
 import { AuthService } from '../../servicios/auth.service';
+import { Constantes } from '../../core/constantes';
 
 @Component({
     styleUrls: ['./persona-crud-dialog.component.css'],
@@ -92,8 +93,14 @@ export class PersonaCrudDialogComponent implements OnInit {
             }
         }
     }
-   private crearPersona(persona: Persona) {
-
+    private crearPersona(persona: Persona) {
+        if (persona.foto === '' || persona.foto === null) {
+            if (persona.genero === Constantes.generoMasculino) {
+                persona.foto = Constantes.fotoDefaultNinio;
+            } else if (persona.genero === Constantes.generoFemenino) {
+                persona.foto = Constantes.fotoDefaultNinia;
+            }
+        }
         this.personaService.crear(persona).subscribe(
             () => {
                 this.dialogRef.close();
@@ -107,7 +114,7 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     }
 
-   private editarPersona(id: number, persona: Persona) {
+    private editarPersona(id: number, persona: Persona) {
         this.personaService.editar(id, persona).subscribe(
             () => {
                 this.dialogRef.close();
@@ -135,7 +142,7 @@ export class PersonaCrudDialogComponent implements OnInit {
 
     }
 
-  private  changeStateControls() {
+    private changeStateControls() {
         if (this.data.action === 'CREATE') {
             this.title = 'Crear Niño';
             this.visibleButtonCreate = true;

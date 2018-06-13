@@ -23,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './servicios/auth.service';
 import { CabeceraComponent } from './cabecera/cabecera.component';
 import { UsuarioDeleteDialogComponent } from './usuario/dialogos/usuario-delete-dialog.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { UploadFileService } from './servicios/upload-file.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { UsuarioDeleteDialogComponent } from './usuario/dialogos/usuario-delete-
     ReactiveFormsModule,
     HttpModule,
     JsonpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   entryComponents: [PersonaCrudDialogComponent, UsuarioDeleteDialogComponent ],
   providers: [HttpService,
@@ -56,7 +58,9 @@ import { UsuarioDeleteDialogComponent } from './usuario/dialogos/usuario-delete-
     PersonaService,
     PercentilOmsService,
     UsuarioService,
-    AuthService],
+    AuthService,
+    UploadFileService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
