@@ -6,6 +6,9 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { MatTableDataSource, MatDialog, } from '@angular/material';
 import { UsuarioDeleteDialogComponent } from './dialogos/usuario-delete-dialog.component';
+import { HttpResponse, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { Constantes } from '../core/constantes';
+import { UploadFileService } from '../servicios/upload-file.service';
 
 @Component({
   selector: 'app-usuario',
@@ -16,11 +19,16 @@ export class UsuarioComponent implements OnInit {
   userSession: any;
   usuario: Usuario;
   usuarioForm: FormGroup;
+  fotoTemp = '';
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  progress: { percentage: number } = { percentage: 0 };
   constructor(private authService: AuthService,
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private usuarioDeleteDialog: MatDialog) {
+    private usuarioDeleteDialog: MatDialog,
+    private uploadFileService: UploadFileService) {
     this.usuario = { username: '', password: '', correo: '' };
   }
 
@@ -52,6 +60,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   tabActual(value) {
+    this.currentFileUpload = null;
     this.createForm();
   }
 
@@ -98,6 +107,8 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.getUsuario(this.userSession.usuario).subscribe(
       u => {
         this.usuario = u;
+        this.fotoTemp = u.foto;
+        this.usuario.foto = Constantes.URIFILE + this.usuario.foto;
       }
     );
   }
@@ -109,10 +120,58 @@ export class UsuarioComponent implements OnInit {
       password: formModel.password,
       nombre: formModel.nombre,
       apellido: formModel.apellido,
-      correo: formModel.correo
+      correo: formModel.correo,
+      foto: this.fotoTemp
     };
     return controlMap;
   }
+
+
+  onSelectFile(event) {
+
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.usuario.foto = event.target.result;
+      }
+
+      this.selectedFiles = event.target.files;
+    }
+  }
+
+
+  onUpload() {
+    this.progress.percentage = 0;
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.uploadFileService.pushFileToStorage(this.currentFileUpload).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress.percentage = this.uploadFileService.calcProgressPercent(event);
+        } else if (event instanceof HttpResponse) {
+          this.usuario.foto = this.currentFileUpload.name;
+          this.usuarioService.editar(this.userSession.usuario, this.usuario).subscribe(
+            () => {
+              this.openSnackBar('OK.!', 'Foto actualizada correctamente');
+              this.sincronizarData();
+            },
+            error => {
+              this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+              console.log(error);
+            }
+          );
+          this.usuario.foto = Constantes.URIFILE + this.usuario.foto;
+        } else if (event instanceof HttpErrorResponse) {
+          this.openSnackBar('UPS!!!', 'Intentelo más tarde');
+        }
+      });
+
+    this.selectedFiles = undefined;
+  }
+
+
 
   openDialog(): void {
     this.usuarioDeleteDialog.open(UsuarioDeleteDialogComponent);
