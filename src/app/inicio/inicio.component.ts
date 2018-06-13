@@ -5,6 +5,7 @@ import { UsuarioService } from '../usuario/usuario.service';
 import { AuthService } from '../servicios/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { Constantes } from '../core/constantes';
 
 
 @Component({
@@ -79,7 +80,8 @@ export class InicioComponent implements OnInit {
     const controlMap: Usuario = {
       username: formModel.username,
       password: formModel.password,
-      correo: formModel.correo
+      correo: formModel.correo,
+      foto: Constantes.perfilDefault
     };
     return controlMap;
   }
