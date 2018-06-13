@@ -11,9 +11,28 @@
                   <mat-card-title>Usuario</mat-card-title>
                   <mat-card-subtitle>{{this.usuario.username}}</mat-card-subtitle>
                 </mat-card-header>
-                <img mat-card-image src="https://scontent.fmad8-1.fna.fbcdn.net/v/t1.0-9/19510451_10213341195146988_8076940860224184211_n.jpg?_nc_cat=0&oh=c9c5f0550befb3c17547a59537abf9d8&oe=5BC2FD53"
-                  alt="Perfil">
+                <img mat-card-image [src]="this.usuario.foto" height="350" alt="Perfil">
+                <div *ngIf="currentFileUpload" class="progress">
+                  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                    {{progress.percentage}}%</div>
+                  <mat-progress-bar *ngIf="currentFileUpload" class="example-margin" color="primary" mode="determinate" [value]="progress.percentage">
+                  </mat-progress-bar>
+                </div>
+                <input #fileInput type="file" style="display:none" (change)="onSelectFile($event)" />
+                <button [disabled]="disable" *ngIf="!selectedFiles" matTooltip="Cambiar Imagen" mat-button  color="primary" (click)="fileInput.click()">
+                  <span>Cambiar imagen</span>
+                  <mat-icon>camera_alt</mat-icon>
+                </button>
+                <button *ngIf="selectedFiles" matTooltip="Guardar"  mat-button color="primary" (click)="onUpload()">
+                  <span>Guardar imagen</span>
+                  <mat-icon>cloud_upload</mat-icon>
+                </button>
+                <mat-divider></mat-divider>    
+                <mat-divider></mat-divider>
+               
                 <mat-card-content>
+                    <br>
                   <p>
                     <strong> Nombres y Apellidos: </strong>
                     {{this.usuario.nombre}} {{this.usuario.apellido}}
@@ -25,7 +44,7 @@
                 </mat-card-content>
                 <mat-divider></mat-divider>
                 <mat-card-actions>
-                  <button mat-button  matTooltip="Eliminar" (click)="openDialog()" color="primary">
+                  <button mat-button matTooltip="Eliminar Usuario" (click)="openDialog()" color="primary">
                     <span>Eliminar</span>
                     <mat-icon>cancel</mat-icon>
                   </button>
@@ -55,12 +74,12 @@
                   <input matInput formControlName="nombre" placeholder="Nombre" required>
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput formControlName="apellido"  placeholder="Apellido" required>
+                  <input matInput formControlName="apellido" placeholder="Apellido" required>
                 </mat-form-field>
                 <mat-form-field>
-                    <input  matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-                      required>
-                  </mat-form-field>
+                  <input matInput formControlName="correo" placeholder="Correo" type="mail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                    required>
+                </mat-form-field>
               </div>
               <mat-dialog-actions>
                 <button mat-button type="submit" mat-raised-button color="primary">Editar</button>

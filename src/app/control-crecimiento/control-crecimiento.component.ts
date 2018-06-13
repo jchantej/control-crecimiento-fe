@@ -7,7 +7,6 @@ import { PercentilOmsComponent } from '../percentil-oms/percentil-oms.component'
 import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
 import { AuthService } from '../servicios/auth.service';
-import { Router } from '@angular/router';
 import { HttpResponse, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Constantes } from '../core/constantes';
 import { UploadFileService } from '../servicios/upload-file.service';
@@ -18,7 +17,6 @@ import { UploadFileService } from '../servicios/upload-file.service';
   styleUrls: ['./control-crecimiento.component.css']
 })
 export class ControlCrecimientoComponent implements OnInit {
-  // pathFotoPersona = '../../assets/img/personas/';
   tipo: any;
   userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
@@ -28,8 +26,6 @@ export class ControlCrecimientoComponent implements OnInit {
   controlForm: FormGroup;
   idPersona: number;
   controlesCrecimiento: ControlCrecimiento[];
-  percentDone: number;
-  uploadSuccess: boolean;
   selectedFiles: FileList;
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
@@ -53,7 +49,6 @@ export class ControlCrecimientoComponent implements OnInit {
   ngOnInit() {
 
     this.userSession = JSON.parse(localStorage.getItem(AuthService.tokenKey));
-    //TODO:Pendiente de mejorar la parte control de la session
     if (this.userSession !== null) {
       this.authService.loggedIn.next(true);
     } else {
