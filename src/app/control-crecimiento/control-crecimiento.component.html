@@ -107,7 +107,7 @@
             <mat-cell *matCellDef="let control"> {{control.talla}} </mat-cell>
           </ng-container>
           <!-- Acciones-->
-          <ng-container matColumnDef="actionsColumn">
+       <!--   <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
             <mat-cell *matCellDef="let item">
               <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
@@ -120,7 +120,7 @@
                 <mat-icon>remove_circle</mat-icon>
               </button>
             </mat-cell>
-          </ng-container>
+          </ng-container> -->
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>

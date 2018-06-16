@@ -20,7 +20,7 @@ export class ControlCrecimientoComponent implements OnInit {
   tipo: any;
   userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
-  displayedColumns = ['fecha', 'edad', 'peso', 'talla', 'actionsColumn'];
+  displayedColumns = ['fecha', 'edad', 'peso', 'talla'];
   selectedPersona: Persona;
   personas: Persona[];
   controlForm: FormGroup;
