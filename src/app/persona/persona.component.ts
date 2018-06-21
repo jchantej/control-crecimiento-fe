@@ -27,7 +27,6 @@ export class PersonaComponent implements OnInit {
 
   ngOnInit() {
     this.userSession = JSON.parse(localStorage.getItem(AuthService.tokenKey));
-    //TODO:Pendiente de mejorar la parte control de la session
     if (this.userSession !== null) {
       this.authService.loggedIn.next(true);
     } else {
@@ -43,7 +42,7 @@ export class PersonaComponent implements OnInit {
       persona => {
         persona.forEach(p => {
           p.foto = Constantes.URIFILE + p.foto;
-      });
+        });
         this.dataSourcePersonas = new MatTableDataSource<Persona>(persona);
         this.dataSourcePersonas.paginator = this.paginator;
       });
@@ -73,7 +72,7 @@ export class PersonaComponent implements OnInit {
   }
 
 
-  openDialog(item?: number, action?: string) {
+  openDialog(item?, action?: string) {
     this.personaDialogRef = this.personaDialogMat.open(PersonaCrudDialogComponent, {
       data: {
         persona: item,
