@@ -65,6 +65,7 @@ export class ControlCrecimientoComponent implements OnInit {
     this.sincronizarData();
     this.disable = false;
     this.controlForm.enable();
+    this.controlForm.reset();
     this.currentFileUpload = null;
 
   }
@@ -102,8 +103,8 @@ export class ControlCrecimientoComponent implements OnInit {
   }
   createForm() {
     this.controlForm = this.formBuilder.group({
-      peso: ['', Validators.required],
-      talla: ['', Validators.required]
+      peso: [''],
+      talla: ['']
     });
   }
 
@@ -119,21 +120,19 @@ export class ControlCrecimientoComponent implements OnInit {
   }
 
   public onSubmit() {
-    if (this.selectedPersona.nombre) {
-      if (!this.controlForm.invalid) {
-        this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
-          () => {
-            this.openSnackBar('OK.!', 'Control agregado correctamente');
-            this.sincronizarData();
-          },
-          error => {
-            this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
-          }
-        );
-      }
-
+    if (!this.controlForm.invalid) {
+      this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
+        () => {
+          this.openSnackBar('OK.!', 'Control agregado correctamente');
+          this.controlForm.reset();
+          this.sincronizarData();
+        },
+        error => {
+          this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
+        }
+      );
     } else {
-      this.openSnackBar('Selecionar:!!!', 'Debe seleccionar un niño de su lista');
+      this.openSnackBar('Datos Obligatorios', 'Debe ingresar Peso y Talla');
     }
 
   }

@@ -30,3 +30,22 @@
   max-width: 400px;
   height: 180px;
 }
+.textAlingCenter{
+  text-align: center;
+}
+
+.fondoFueraRango{
+  background:rgb(255,0,0);
+  
+}
+.fondoAlertaRango{
+  background:rgb(202, 111, 30);
+}
+.fondoRangoIdeal{
+  background:rgb(138,221,45); 
+}
+
+.borderRango{
+  border-style: solid;
+  border-color: rgb(206, 215, 218);
+}

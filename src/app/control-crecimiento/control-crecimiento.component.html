@@ -24,12 +24,12 @@
               </mat-progress-bar>
             </div>
             <input #fileInput type="file" style="display:none" (change)="onSelectFile($event)" />
-            <button [disabled]="disable" *ngIf="!selectedFiles" matTooltip="Cambiar Imagen" mat-button color="primary" (click)="fileInput.click()"  >
-                <span>cambiar imagen</span>
+            <button [disabled]="disable" *ngIf="!selectedFiles" matTooltip="Cambiar Imagen" mat-button color="primary" (click)="fileInput.click()">
+              <span>cambiar imagen</span>
               <mat-icon>edit</mat-icon>
             </button>
-            <button *ngIf="selectedFiles" matTooltip="Guardar" mat-button  color="primary" (click)="onUpload()"  >
-                <span>guardar imagen</span>
+            <button *ngIf="selectedFiles" matTooltip="Guardar" mat-button color="primary" (click)="onUpload()">
+              <span>guardar imagen</span>
               <mat-icon>cloud_upload</mat-icon>
             </button>
 
@@ -37,24 +37,33 @@
 
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
-          <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
-          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento | date}}</p>
-          <p>Edad actual: {{selectedPersona.edadPeriodo}}</p>
-          <p>Genero: {{selectedPersona.genero}}</p>
+          <p>
+            <strong>Nombre:</strong> {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
+          <p>
+            <strong>Fecha nacimiento:</strong> {{selectedPersona.fechaNacimiento | date}}</p>
+          <p>
+            <strong> Edad actual:</strong> {{selectedPersona.edadPeriodo}}</p>
+          <p>
+            <strong> Genero: </strong> {{selectedPersona.genero}}</p>
         </div>
-        <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40">
-          Agregar control
+
+        <div fxFlex="30" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40" class="textAlingCenter">
+          <strong>Agregar Controles</strong>
+          <mat-divider></mat-divider>
           <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container">
             <mat-form-field>
-              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number">
-              <mat-error>Debe ingresar un peso</mat-error>
+              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
+              <!-- <mat-error>Debe ingresar un peso</mat-error>-->
             </mat-form-field>
             <mat-form-field>
-              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number">
-              <mat-error>debe ingresar una talla</mat-error>
+              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
+              <!-- <mat-error>debe ingresar una talla</mat-error>-->
             </mat-form-field>
             <button [disabled]="disable" mat-button type="submit" mat-raised-button color="primary">Agregar</button>
           </form>
+        </div>
+        <div fxFlex="10" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40" class="textAlingCenter">
+
         </div>
       </div>
 
@@ -107,7 +116,7 @@
             <mat-cell *matCellDef="let control"> {{control.talla}} </mat-cell>
           </ng-container>
           <!-- Acciones-->
-       <!--   <ng-container matColumnDef="actionsColumn">
+          <!--   <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
             <mat-cell *matCellDef="let item">
               <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
@@ -129,7 +138,34 @@
       </div>
     </div>
     <div fxFlex="10%" class="persona-container-list">
-      Informacion referen a los colores de las curvas de crecimiento
+      <div *ngIf="!disable" class="control-header">
+        <p>
+          <strong>Significado Colores</strong>
+        </p>
+      </div>
+
+      <br>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoFueraRango">Fuera del Rango</div>
+      </div>
+      <hr>
+      <strong *ngIf="!disable">Entre:</strong>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoFueraRango">Dentro de los</div>
+        <div class="fondoAlertaRango">rangos con Alerta</div>
+      </div>
+      <hr>
+      <strong *ngIf="!disable">Entre:</strong>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoAlertaRango">Dentro</div>
+        <div class="fondoRangoIdeal">de los </div>
+        <div class="fondoAlertaRango">Rangos</div>
+      </div>
+      <hr>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoRangoIdeal">Ideal</div>
+      </div>
+
     </div>
   </div>
 </div>
