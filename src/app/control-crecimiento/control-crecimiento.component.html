@@ -94,13 +94,13 @@
           </mat-form-field>
         </div>
         <mat-table #table [dataSource]="dataSourceControles" matSort>
-          <!-- Id Column -->
+    
           <ng-container matColumnDef="fecha">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha registro</mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.fechaRegistro | date : 'dd/MM/yyyy'}} </mat-cell>
           </ng-container>
 
-          <!-- Name Column -->
+
           <ng-container matColumnDef="edad">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(días) </mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.edad}} </mat-cell>
@@ -115,6 +115,16 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Talla (cm)</mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.talla}} </mat-cell>
           </ng-container>
+
+          <ng-container matColumnDef="observacionPeso">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Peso</mat-header-cell>
+              <mat-cell *matCellDef="let control"> {{control.observacionPeso}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="observacionTalla">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Talla</mat-header-cell>
+                <mat-cell *matCellDef="let control"> {{control.observacionTalla}} </mat-cell>
+              </ng-container>
           <!-- Acciones-->
           <!--   <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>

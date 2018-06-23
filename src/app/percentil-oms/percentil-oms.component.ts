@@ -185,7 +185,7 @@ export class PercentilOmsComponent implements OnInit {
             pivote++;
           }
         }
-        this.chartData[5].label = persona.nombre;   
+        this.chartData[5].label = persona.nombre;
       });
   }
   onChartClick(event) {

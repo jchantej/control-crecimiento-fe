@@ -20,7 +20,7 @@ export class ControlCrecimientoComponent implements OnInit {
   tipo: any;
   userSession: any;
   dataSourceControles: MatTableDataSource<ControlCrecimiento>;
-  displayedColumns = ['fecha', 'edad', 'peso', 'talla'];
+  displayedColumns = ['fecha', 'edad', 'peso', 'talla', 'observacionPeso', 'observacionTalla'];
   selectedPersona: Persona;
   personas: Persona[];
   controlForm: FormGroup;
@@ -44,7 +44,7 @@ export class ControlCrecimientoComponent implements OnInit {
     private uploadFileService: UploadFileService
   ) {
 
-    this.selectedPersona = { nombre: '', apellido: '', genero: '', foto: Constantes.fotoDefaultNN, grupoSanguineo: '', idUsuario: 0 }
+    this.selectedPersona = { nombre: '', apellido: '', genero: '', foto: Constantes.fotoDefaultNN, grupoSanguineo: '', idUsuario: 0 };
   }
   ngOnInit() {
 
