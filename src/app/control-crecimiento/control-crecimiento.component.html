@@ -1,6 +1,12 @@
-<div class="container">
+<div class="container mat-elevation-z5">
   <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
-    <div fxFlex="20%" class="persona-container-list">
+    <div fxFlex="20%" class="persona-container-list ">
+      <div class="control-header textAlingCenter">
+        <p>
+          <strong>Listado Nin@s</strong>
+        </p>
+        <hr>
+      </div>
       <mat-nav-list>
         <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="habilitarPanelControlCrecimiento(persona)">
           <img matListAvatar [src]="persona.foto" alt="foto">
@@ -10,7 +16,7 @@
         </mat-list-item>
       </mat-nav-list>
     </div>
-    <div fxFlex="70%">
+    <div fxFlex="70%" class="mat-elevation-z5">
       <div fxLayout="row" fxLayoutWrap>
         <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50">
 
@@ -85,8 +91,11 @@
       </div>
 
       <div fxFlex>
-        <div class="control-header">
-          <p> Infomacion refrente a los cotroles</p>
+        <hr>
+        <div class="control-header textAlingCenter">
+          <p>
+            <strong>Registro Controles</strong>
+          </p>
         </div>
         <div class="persona-header">
           <mat-form-field>
@@ -94,7 +103,7 @@
           </mat-form-field>
         </div>
         <mat-table #table [dataSource]="dataSourceControles" matSort>
-    
+
           <ng-container matColumnDef="fecha">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha registro</mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.fechaRegistro | date : 'dd/MM/yyyy'}} </mat-cell>
@@ -117,14 +126,14 @@
           </ng-container>
 
           <ng-container matColumnDef="observacionPeso">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Peso</mat-header-cell>
-              <mat-cell *matCellDef="let control"> {{control.observacionPeso}} </mat-cell>
-            </ng-container>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Peso</mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.observacionPeso}} </mat-cell>
+          </ng-container>
 
-            <ng-container matColumnDef="observacionTalla">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Talla</mat-header-cell>
-                <mat-cell *matCellDef="let control"> {{control.observacionTalla}} </mat-cell>
-              </ng-container>
+          <ng-container matColumnDef="observacionTalla">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Talla</mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.observacionTalla}} </mat-cell>
+          </ng-container>
           <!-- Acciones-->
           <!--   <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>

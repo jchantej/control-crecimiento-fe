@@ -47,5 +47,12 @@
 
 .borderRango{
   border-style: solid;
-  border-color: rgb(206, 215, 218);
+  border-color: rgb(53, 153, 187);
 }
+
+hr {
+  height: 1px;
+  color: #123455;
+  background-color: #2a1ab8;
+  border: none;
+  }
