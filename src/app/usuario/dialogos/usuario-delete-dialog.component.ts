@@ -25,7 +25,7 @@ export class UsuarioDeleteDialogComponent implements OnInit {
 
     }
 
-    private eliminarUsuario() {
+    eliminarUsuario() {
         this.usuarioService.eliminar(this.userSession.usuario).subscribe(
             () => {
                 this.dialogRef.close();
@@ -38,11 +38,11 @@ export class UsuarioDeleteDialogComponent implements OnInit {
             }
         );
 
-    } 
+    }
 
-openSnackBar(title: string, message: string) {
-    this.snackBar.open(title, message, {
-        duration: 8000,
-    });
+    openSnackBar(title: string, message: string) {
+        this.snackBar.open(title, message, {
+            duration: 8000,
+        });
+    }
 }
-} 

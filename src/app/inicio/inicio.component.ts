@@ -60,6 +60,7 @@ export class InicioComponent implements OnInit {
           if (u.username === null || u.username === '' || u.username === undefined) {
             this.usuarioService.crear(this.registroMapData()).subscribe(
               () => {
+                this.authService.login(this.registroForm.value.username, this.registroForm.value.password);
                 this.openSnackBar('OK.!', 'Usuario registrado correctamente');
               },
               error => {
