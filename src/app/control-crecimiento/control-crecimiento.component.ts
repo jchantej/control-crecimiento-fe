@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ControlCrecimiento } from './control-crecimiento.model';
 import { ControlCrecimientoService } from './control-crecimiento.service';
-import { MatSnackBar, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { PercentilOmsComponent } from '../percentil-oms/percentil-oms.component';
 import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
@@ -26,6 +26,7 @@ export class ControlCrecimientoComponent implements OnInit {
   controlForm: FormGroup;
   idPersona: number;
   controlesCrecimiento: ControlCrecimiento[];
+  controlesCrecimientoSort: ControlCrecimiento[];
   selectedFiles: FileList;
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
@@ -35,6 +36,7 @@ export class ControlCrecimientoComponent implements OnInit {
     { value: 'T', viewValue: 'Talla', checked: 'false' }
   ];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(PercentilOmsComponent) percentilOms: PercentilOmsComponent;
   constructor(private formBuilder: FormBuilder,
     private controlCrecimientoService: ControlCrecimientoService,
@@ -79,9 +81,13 @@ export class ControlCrecimientoComponent implements OnInit {
     }
     this.controlCrecimientoService.getControlesCrecimiento(this.selectedPersona.id).subscribe(
       controles => {
+        this.percentilOms.sincronizarData(controles, this.selectedPersona, this.tipo);
+        controles.sort((a, b) => {
+          return b.id - a.id;
+        });
         this.dataSourceControles = new MatTableDataSource<ControlCrecimiento>(controles);
         this.dataSourceControles.paginator = this.paginator;
-        this.percentilOms.sincronizarData(controles, this.selectedPersona, this.tipo);
+        this.dataSourceControles.sort = this.sort;
       }
     );
   }
