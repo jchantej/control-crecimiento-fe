@@ -56,7 +56,7 @@ export class PersonaComponent implements OnInit {
   }
 
   prepareCreate() {
-    this.openDialog(0, 'CREATE');
+    this.openDialog({ foto: '' }, 'CREATE');
   }
 
   prepareUpdate(item) {
