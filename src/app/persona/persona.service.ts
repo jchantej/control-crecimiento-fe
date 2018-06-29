@@ -11,19 +11,19 @@ export class PersonaService {
   }
 
   getListaPersonas(id: number): Observable<Persona[]> {
-    return this.httpService.get(PersonaService.PERSONAS + PersonaService.USUARIO + '/' + id);
+    return this.httpService.authBasic().get(PersonaService.PERSONAS + PersonaService.USUARIO + '/' + id);
   }
 
   crear(persona: Persona): Observable<any> {
-    return this.httpService.post(PersonaService.PERSONAS, persona);
+    return this.httpService.authBasic().post(PersonaService.PERSONAS, persona);
   }
 
   editar(id: number, persona: Persona): Observable<any> {
-    return this.httpService.put(PersonaService.PERSONAS + '/' + id, persona);
+    return this.httpService.authBasic().put(PersonaService.PERSONAS + '/' + id, persona);
   }
 
   eliminar(id: number): Observable<any> {
-    return this.httpService.delete(PersonaService.PERSONAS + '/' + id);
+    return this.httpService.authBasic().delete(PersonaService.PERSONAS + '/' + id);
   }
 
 

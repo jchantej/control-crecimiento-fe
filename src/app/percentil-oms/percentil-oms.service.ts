@@ -10,7 +10,8 @@ export class PercentilOmsService {
   }
 
   getListaPercentilesOms(genero: string, tipo: string, edad: string): Observable<PercentilOms[]> {
-    return this.httpService.param('genero', genero).param('tipo', tipo).param('edad', edad)
+    return this.httpService.authBasic()
+      .param('genero', genero).param('tipo', tipo).param('edad', edad)
       .get(PercentilOmsService.PERCENTILES + PercentilOmsService.GENEROTIPO);
   }
 
