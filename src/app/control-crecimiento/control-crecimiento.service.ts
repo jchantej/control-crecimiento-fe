@@ -15,6 +15,9 @@ export class ControlCrecimientoService {
     return this.httpService.authBasic().post(ControlCrecimientoService.CONTROLES, controlCrecimiento);
   }
 
+  editar(id: number, controlCrecimiento: ControlCrecimiento): Observable<any> {
+    return this.httpService.authBasic().put(ControlCrecimientoService.CONTROLES + '/' + id, controlCrecimiento);
+  }
   getControlesCrecimiento(id: number): Observable<ControlCrecimiento[]> {
     return this.httpService.authBasic().get(ControlCrecimientoService.CONTROLES + ControlCrecimientoService.PERSONA + '/' + id);
   }

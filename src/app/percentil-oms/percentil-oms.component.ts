@@ -36,7 +36,7 @@ export class PercentilOmsComponent implements OnInit {
     title: {
       display: true,
       text: 'Curva de Crecimiento'
-  }
+    }
   };
   chartData = [
     {
@@ -145,12 +145,10 @@ export class PercentilOmsComponent implements OnInit {
   }
 
   sincronizarData(controlesCrecimineto, persona, tipo) {
-
     //Ordena la lista de asc
     controlesCrecimineto.sort((a, b) => {
       return a.id - b.id;
     });
-
     let pivote = 0;
     this.chartData[5].data = [];
     const valoresX = [];

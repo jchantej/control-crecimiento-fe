@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ControlCrecimiento } from './control-crecimiento.model';
 import { ControlCrecimientoService } from './control-crecimiento.service';
-import { MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatSnackBar, MatDialogRef, MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { PercentilOmsComponent } from '../percentil-oms/percentil-oms.component';
 import { Persona } from '../persona/persona.model';
 import { PersonaService } from '../persona/persona.service';
@@ -10,6 +10,8 @@ import { AuthService } from '../servicios/auth.service';
 import { HttpResponse, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Constantes } from '../core/constantes';
 import { UploadFileService } from '../servicios/upload-file.service';
+import { ControlUpdateDialogComponent } from './dialogos/control-update-dialog/control-update-dialog.component';
+
 
 @Component({
   selector: 'app-control-crecimiento',
@@ -26,7 +28,7 @@ export class ControlCrecimientoComponent implements OnInit {
   controlForm: FormGroup;
   idPersona: number;
   controlesCrecimiento: ControlCrecimiento[];
-  controlesCrecimientoSort: ControlCrecimiento[];
+  controlCrecimiento: ControlCrecimiento;
   selectedFiles: FileList;
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
@@ -35,6 +37,8 @@ export class ControlCrecimientoComponent implements OnInit {
     { value: 'P', viewValue: 'Peso', checked: 'true' },
     { value: 'T', viewValue: 'Talla', checked: 'false' }
   ];
+
+  controlDialogRef: MatDialogRef<ControlUpdateDialogComponent>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(PercentilOmsComponent) percentilOms: PercentilOmsComponent;
@@ -43,10 +47,12 @@ export class ControlCrecimientoComponent implements OnInit {
     private personaService: PersonaService,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private controlDialogMat: MatDialog
   ) {
 
     this.selectedPersona = { nombre: '', apellido: '', genero: '', foto: Constantes.fotoDefaultNN, grupoSanguineo: '', idUsuario: 0 };
+    this.controlCrecimiento = { peso: 0.0, talla: 0.0, idPersona: 0, edad: 0 };
   }
   ngOnInit() {
 
@@ -88,6 +94,7 @@ export class ControlCrecimientoComponent implements OnInit {
         this.dataSourceControles = new MatTableDataSource<ControlCrecimiento>(controles);
         this.dataSourceControles.paginator = this.paginator;
         this.dataSourceControles.sort = this.sort;
+        this.controlesCrecimiento = controles;
       }
     );
   }
@@ -127,16 +134,27 @@ export class ControlCrecimientoComponent implements OnInit {
 
   public onSubmit() {
     if (!this.controlForm.invalid) {
-      this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
-        () => {
-          this.openSnackBar('OK.!', 'Control agregado correctamente');
-          this.controlForm.reset();
-          this.sincronizarData();
-        },
-        error => {
-          this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
-        }
-      );
+
+      const value = this.controlesCrecimiento.find(item =>
+        this.formatDate(new Date(item.fechaRegistro)) === this.formatDate(new Date()));
+      if (!value) {
+        this.controlCrecimientoService.crear(this.controlMapData()).subscribe(
+          () => {
+            this.openSnackBar('OK.!', 'Control agregado correctamente');
+            this.controlForm.reset();
+            this.sincronizarData();
+          },
+          error => {
+            this.openSnackBar('UPS!!!', 'Intentelo mas tarde');
+          }
+        );
+      } else {
+        this.controlCrecimiento.id = value.id;
+        this.controlCrecimiento.edad = value.edad;
+        this.controlCrecimiento.peso = this.controlForm.value.peso;
+        this.controlCrecimiento.talla = this.controlForm.value.talla;
+        this.openDialog(this.controlCrecimiento);
+      }
     } else {
       this.openSnackBar('Datos Obligatorios', 'Debe ingresar Peso y Talla');
     }
@@ -186,6 +204,14 @@ export class ControlCrecimientoComponent implements OnInit {
     this.selectedFiles = undefined;
   }
 
+  private formatDate(fecha: Date): string {
+
+    const dia = fecha.getDay();
+    const mes = fecha.getMonth();
+    const anio = fecha.getFullYear();
+    return `${dia}-${mes}-${anio}`;
+
+  }
 
   openSnackBar(title: string, message: string) {
     this.snackBar.open(title, message, {
@@ -198,6 +224,21 @@ export class ControlCrecimientoComponent implements OnInit {
     this.sincronizarData();
 
   }
+
+  openDialog(controlCrecimiento: ControlCrecimiento) {
+    this.controlDialogRef = this.controlDialogMat.open(ControlUpdateDialogComponent, {
+      data: {
+        controlCrecimiento: controlCrecimiento
+      }
+    });
+
+    this.controlDialogRef.afterClosed().subscribe(
+      () => {
+        this.controlForm.reset();
+        this.sincronizarData();
+      });
+  }
+
 }
 
 
