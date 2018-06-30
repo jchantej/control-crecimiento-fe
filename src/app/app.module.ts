@@ -10,7 +10,7 @@ import { PersonaComponent } from './persona/persona.component';
 import { PersonaService } from '../app/persona/persona.service';
 import { PercentilOmsService } from '../app/percentil-oms/percentil-oms.service';
 import { ControlCrecimientoService } from '../app/control-crecimiento/control-crecimiento.service';
-import {UsuarioService} from '../app/usuario/usuario.service';
+import { UsuarioService } from '../app/usuario/usuario.service';
 import { PersonaCrudDialogComponent } from '../app/persona/dialogos/persona-crud-dialog.component';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpService } from '../app/core/http.service';
@@ -25,6 +25,7 @@ import { CabeceraComponent } from './cabecera/cabecera.component';
 import { UsuarioDeleteDialogComponent } from './usuario/dialogos/usuario-delete-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadFileService } from './servicios/upload-file.service';
+import { ControlUpdateDialogComponent } from './control-crecimiento/dialogos/control-update-dialog/control-update-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,8 @@ import { UploadFileService } from './servicios/upload-file.service';
     PercentilOmsComponent,
     InicioComponent,
     UsuarioComponent,
-    CabeceraComponent
+    CabeceraComponent,
+    ControlUpdateDialogComponent
 
   ],
   imports: [
@@ -52,7 +54,9 @@ import { UploadFileService } from './servicios/upload-file.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  entryComponents: [PersonaCrudDialogComponent, UsuarioDeleteDialogComponent ],
+  entryComponents: [PersonaCrudDialogComponent,
+    UsuarioDeleteDialogComponent,
+    ControlUpdateDialogComponent],
   providers: [HttpService,
     ControlCrecimientoService,
     PersonaService,

@@ -25,8 +25,34 @@
   margin: 5px;
 }
 
-imagen{
-  max-width: 100%;
-  width: auto;
-  height: auto !important; /* needs to be important because md-card also sets it that way */
+.imagenPerfil{
+  width: 90%;
+  max-width: 400px;
+  height: 180px;
 }
+.textAlingCenter{
+  text-align: center;
+}
+
+.fondoFueraRango{
+  background:rgb(255,0,0);
+  
+}
+.fondoAlertaRango{
+  background:rgb(202, 111, 30);
+}
+.fondoRangoIdeal{
+  background:rgb(138,221,45); 
+}
+
+.borderRango{
+  border-style: solid;
+  border-color: white;
+}
+
+hr {
+  height: 1px;
+  color: #123455;
+  background-color: #2a1ab8;
+  border: none;
+  }

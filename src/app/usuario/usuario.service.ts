@@ -10,19 +10,19 @@ export class UsuarioService {
   constructor(private httpService: HttpService) { }
 
   crear(usuario: Usuario): Observable<any> {
-    return this.httpService.post(UsuarioService.USUARIOS, usuario);
+    return this.httpService.authBasic().post(UsuarioService.USUARIOS, usuario);
   }
 
   editar(username: string, usuario: Usuario): Observable<any> {
-    return this.httpService.put(UsuarioService.USUARIOS + '/' + username , usuario);
+    return this.httpService.authBasic().put(UsuarioService.USUARIOS + '/' + username , usuario);
   }
 
   eliminar(username: string): Observable<any> {
-    return this.httpService.delete(UsuarioService.USUARIOS + '/' + username);
+    return this.httpService.authBasic().delete(UsuarioService.USUARIOS + '/' + username);
   }
 
   getUsuario(username: string): Observable<Usuario> {
-    return this.httpService.get(UsuarioService.USUARIOS + '/' + username);
+    return this.httpService.authBasic().get(UsuarioService.USUARIOS + '/' + username);
   }
 
 }

@@ -12,11 +12,14 @@ export class ControlCrecimientoService {
 
 
   crear(controlCrecimiento: ControlCrecimiento): Observable<any> {
-    return this.httpService.post(ControlCrecimientoService.CONTROLES, controlCrecimiento);
+    return this.httpService.authBasic().post(ControlCrecimientoService.CONTROLES, controlCrecimiento);
   }
 
+  editar(id: number, controlCrecimiento: ControlCrecimiento): Observable<any> {
+    return this.httpService.authBasic().put(ControlCrecimientoService.CONTROLES + '/' + id, controlCrecimiento);
+  }
   getControlesCrecimiento(id: number): Observable<ControlCrecimiento[]> {
-    return this.httpService.get(ControlCrecimientoService.CONTROLES + ControlCrecimientoService.PERSONA + '/' + id);
+    return this.httpService.authBasic().get(ControlCrecimientoService.CONTROLES + ControlCrecimientoService.PERSONA + '/' + id);
   }
 
 

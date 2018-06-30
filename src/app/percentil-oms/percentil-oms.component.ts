@@ -11,13 +11,31 @@ export class PercentilOmsComponent implements OnInit {
 
   controlesCrecimiento: any[];
   percentilesOms: PercentilOms[];
-  options: {
+  chartOptions: any = {
+    responsive: true,
     scales: {
       yAxes: [{
         ticks: {
-          stepSize: 1
+          stepSize: 2
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Peso (Kg)'
         }
-      }]
+      }],
+      xAxes: [{
+        id: 'xAxis1',
+        ticks: {
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Edad (Días)'
+        }
+      }],
+    },
+    title: {
+      display: true,
+      text: 'Curva de Crecimiento'
     }
   };
   chartData = [
@@ -25,8 +43,8 @@ export class PercentilOmsComponent implements OnInit {
       data: [],
       label: 'Percentil 3',
       fill: false,
-      borderWidth: 1.5,
-      pointRadius: 0
+      borderWidth: 1,
+      pointRadius: 0,
     },
     {
       data: [],
@@ -51,14 +69,14 @@ export class PercentilOmsComponent implements OnInit {
     },
     {
       data: [],
-      label: 'Percentil 97',
+      label: 'Percentil 97 |',
       fill: false,
       pointRadius: 0,
       borderWidth: 1.5
     },
     {
       data: [],
-      label: '| Nin@',
+      label: 'Nin@',
       fill: false,
       showLine: false,
       pointRadius: 7.5
@@ -127,19 +145,24 @@ export class PercentilOmsComponent implements OnInit {
   }
 
   sincronizarData(controlesCrecimineto, persona, tipo) {
-
+    //Ordena la lista de asc
+    controlesCrecimineto.sort((a, b) => {
+      return a.id - b.id;
+    });
     let pivote = 0;
     this.chartData[5].data = [];
     const valoresX = [];
     const valoresY = [];
 
     if (tipo.value === 'P') {
+      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = 'Peso (Kg)';
       for (let i = 0; i < controlesCrecimineto.length; ++i) {
         valoresX[i] = (controlesCrecimineto[i].edad);
         valoresY[i] = (controlesCrecimineto[i].peso);
       }
 
     } else if (tipo.value === 'T') {
+      this.chartOptions.scales.yAxes[0].scaleLabel.labelString = 'Talla (cm)';
       for (let i = 0; i < controlesCrecimineto.length; ++i) {
         valoresX[i] = (controlesCrecimineto[i].edad);
         valoresY[i] = (controlesCrecimineto[i].talla);
@@ -165,6 +188,7 @@ export class PercentilOmsComponent implements OnInit {
             pivote++;
           }
         }
+        this.chartData[5].label = persona.nombre;
       });
   }
   onChartClick(event) {

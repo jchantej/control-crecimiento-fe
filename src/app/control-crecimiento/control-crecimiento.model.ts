@@ -4,6 +4,8 @@ export interface ControlCrecimiento {
     talla: number;
     idPersona: number;
     edad?: number;
+    observacionPeso?: string;
+    observacionTalla?: string;
     fechaRegistro?: Date;
     edadPeriodo?: string;
 }

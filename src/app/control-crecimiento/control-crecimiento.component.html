@@ -1,6 +1,12 @@
-<div class="container">
+<div class="container mat-elevation-z5">
   <div fxLayout="row" fxLayoutAlign="center" fxLayoutWrap>
-    <div fxFlex="20%" class="persona-container-list">
+    <div fxFlex="20%" class="persona-container-list ">
+      <div class="control-header textAlingCenter">
+        <p>
+          <strong>Listado Nin@s</strong>
+        </p>
+        <hr>
+      </div>
       <mat-nav-list>
         <mat-list-item *ngFor="let persona of personas" role="navigation" (click)="habilitarPanelControlCrecimiento(persona)">
           <img matListAvatar [src]="persona.foto" alt="foto">
@@ -10,12 +16,12 @@
         </mat-list-item>
       </mat-nav-list>
     </div>
-    <div fxFlex="70%">
+    <div fxFlex="70%" class="mat-elevation-z3">
       <div fxLayout="row" fxLayoutWrap>
         <div fxFlex="20" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="50">
 
           <div fxLayout="column" fxLayoutWrap>
-            <img class="imagen" [src]="selectedPersona.foto" alt="foto" height="180" width="200">
+            <img class="imagen" [src]="selectedPersona.foto" alt="foto" class="imagenPerfil">
             <div *ngIf="currentFileUpload" class="progress">
               <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
                 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
@@ -24,12 +30,12 @@
               </mat-progress-bar>
             </div>
             <input #fileInput type="file" style="display:none" (change)="onSelectFile($event)" />
-            <button [disabled]="disable" *ngIf="!selectedFiles" matTooltip="Cambiar Imagen" mat-button color="primary" (click)="fileInput.click()"  >
-                <span>cambiar imagen</span>
+            <button [disabled]="disable" *ngIf="!selectedFiles" matTooltip="Cambiar Imagen" mat-button color="primary" (click)="fileInput.click()">
+              <span>cambiar imagen</span>
               <mat-icon>edit</mat-icon>
             </button>
-            <button *ngIf="selectedFiles" matTooltip="Guardar" mat-button  color="primary" (click)="onUpload()"  >
-                <span>guardar imagen</span>
+            <button *ngIf="selectedFiles" matTooltip="Guardar" mat-button color="primary" (click)="onUpload()">
+              <span>guardar imagen</span>
               <mat-icon>cloud_upload</mat-icon>
             </button>
 
@@ -37,24 +43,34 @@
 
         </div>
         <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="100">
-          <p>Nombre: {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
-          <p>Fecha nacimiento: {{selectedPersona.fechaNacimiento | date}}</p>
-          <p>Edad actual: {{selectedPersona.edadPeriodo}}</p>
-          <p>Genero: {{selectedPersona.genero}}</p>
+          <p>
+            <strong>Nombre:</strong> {{selectedPersona.nombre}} {{selectedPersona.apellido}} </p>
+          <p>
+            <strong>Fecha nacimiento:</strong> {{selectedPersona.fechaNacimiento | date}}</p>
+          <p>
+            <strong> Edad actual:</strong> {{selectedPersona.edadPeriodo}}</p>
+          <p>
+            <strong> Genero: </strong> {{selectedPersona.genero}}</p>
         </div>
-        <div fxFlex="40" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40">
-          Agregar control
+
+        <div fxFlex="30" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40" class="textAlingCenter">
+         ;<br>
+          <strong>Agregar Controles</strong>
+          <mat-divider></mat-divider>
           <form [formGroup]="controlForm" (ngSubmit)="onSubmit()" class="form-control-container">
             <mat-form-field>
-              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number">
-              <mat-error>Debe ingresar un peso</mat-error>
+              <input class="form-control" formControlName="peso" matInput placeholder="Peso (Kg)" type="number" required>
+              <!-- <mat-error>Debe ingresar un peso</mat-error>-->
             </mat-form-field>
             <mat-form-field>
-              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number">
-              <mat-error>debe ingresar una talla</mat-error>
+              <input class="form-control" matInput formControlName="talla" placeholder="Talla (cm)" type="number" required>
+              <!-- <mat-error>debe ingresar una talla</mat-error>-->
             </mat-form-field>
             <button [disabled]="disable" mat-button type="submit" mat-raised-button color="primary">Agregar</button>
           </form>
+        </div>
+        <div fxFlex="10" fxFlex.lt-sm="100" fxFlex.sm="100" fxFlex.md="40" class="textAlingCenter">
+
         </div>
       </div>
 
@@ -76,8 +92,11 @@
       </div>
 
       <div fxFlex>
-        <div class="control-header">
-          <p> Infomacion refrente a los cotroles</p>
+        <hr>
+        <div class="control-header textAlingCenter">
+          <p>
+            <strong>Registro Controles</strong>
+          </p>
         </div>
         <div class="persona-header">
           <mat-form-field>
@@ -85,13 +104,13 @@
           </mat-form-field>
         </div>
         <mat-table #table [dataSource]="dataSourceControles" matSort>
-          <!-- Id Column -->
+
           <ng-container matColumnDef="fecha">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha registro</mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.fechaRegistro | date : 'dd/MM/yyyy'}} </mat-cell>
           </ng-container>
 
-          <!-- Name Column -->
+
           <ng-container matColumnDef="edad">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Edad(días) </mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.edad}} </mat-cell>
@@ -106,8 +125,18 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Talla (cm)</mat-header-cell>
             <mat-cell *matCellDef="let control"> {{control.talla}} </mat-cell>
           </ng-container>
+
+          <ng-container matColumnDef="observacionPeso">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Peso</mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.observacionPeso}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="observacionTalla">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Observación Talla</mat-header-cell>
+            <mat-cell *matCellDef="let control"> {{control.observacionTalla}} </mat-cell>
+          </ng-container>
           <!-- Acciones-->
-          <ng-container matColumnDef="actionsColumn">
+          <!--   <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
             <mat-cell *matCellDef="let item">
               <button matTooltip="Ver" mat-icon-button (click)="read(item.id)">
@@ -120,7 +149,7 @@
                 <mat-icon>remove_circle</mat-icon>
               </button>
             </mat-cell>
-          </ng-container>
+          </ng-container> -->
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
@@ -129,7 +158,34 @@
       </div>
     </div>
     <div fxFlex="10%" class="persona-container-list">
-      Informacion referen a los colores de las curvas de crecimiento
+      <div *ngIf="!disable" class="control-header">
+        <p>
+          <strong>Significado Colores</strong>
+        </p>
+      </div>
+
+      <br>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoFueraRango">Fuera del Rango</div>
+      </div>
+      <hr>
+      <strong *ngIf="!disable">Entre:</strong>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoFueraRango">Dentro de los</div>
+        <div class="fondoAlertaRango">rangos con Alerta</div>
+      </div>
+      <hr>
+      <strong *ngIf="!disable">Entre:</strong>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoAlertaRango">Dentro</div>
+        <div class="fondoRangoIdeal">de los </div>
+        <div class="fondoAlertaRango">Rangos</div>
+      </div>
+      <hr>
+      <div *ngIf="!disable" class="borderRango textAlingCenter">
+        <div class="fondoRangoIdeal">Ideal</div>
+      </div>
+
     </div>
   </div>
 </div>

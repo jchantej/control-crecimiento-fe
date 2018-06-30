@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Alerta</h1>
+<mat-divider></mat-divider>
+<div class="example-container">
+  <mat-icon color="primary">add_alert</mat-icon>
+  <h4>Ya existe un Control de crecimiento ingresado para hoy.</h4>
+  <h4>Desea actulizarlo con los nuevos valores...?</h4>
+  <div class="controles">
+  <h3>Peso: {{data.controlCrecimiento.peso}}</h3>
+  <h3>Talla: {{data.controlCrecimiento.talla}}</h3>
+</div>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-actions>
+  <button mat-button mat-raised-button color="primary" (click)="editarControlCrecimiento()">Actualizar</button>
+  <button mat-button mat-dialog-close mat-raised-button color="primary">Cancelar</button>
+</mat-dialog-actions>

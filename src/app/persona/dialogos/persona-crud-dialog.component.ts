@@ -23,7 +23,7 @@ export class PersonaCrudDialogComponent implements OnInit {
     message: string;
     generos = [
         { value: 'M', viewValue: 'Masculino' },
-        { value: 'F', viewValue: 'Feminino' }
+        { value: 'F', viewValue: 'Femenino' }
     ];
 
     grupoSanguineos = [
@@ -42,10 +42,9 @@ export class PersonaCrudDialogComponent implements OnInit {
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<PersonaCrudDialogComponent>,
         private snackBar: MatSnackBar,
-        private authService: AuthService,
         @Inject(MAT_DIALOG_DATA) private data
     ) {
-        this.persona = { nombre: '', apellido: '', genero: '', grupoSanguineo: '', foto: '', idUsuario: 0 };
+        this.persona = { nombre: '', apellido: '', genero: '', grupoSanguineo: '', idUsuario: 0 };
     }
 
     ngOnInit(): void {
@@ -61,7 +60,6 @@ export class PersonaCrudDialogComponent implements OnInit {
             fechaNacimiento: this.data.persona ? new Date(this.data.persona.fechaNacimiento) : '',
             genero: this.data.persona ? this.data.persona.genero : '',
             grupoSanguineo: this.data.persona ? this.data.persona.grupoSanguineo : '',
-            foto: this.data.persona ? this.data.persona.foto : ''
         });
 
         if (this.data.action === 'DELETE' || this.data.action === 'READ') {
@@ -77,7 +75,7 @@ export class PersonaCrudDialogComponent implements OnInit {
             fechaNacimiento: new Date(formModel.fechaNacimiento),
             genero: formModel.genero,
             grupoSanguineo: formModel.grupoSanguineo,
-            foto: formModel.foto,
+            foto: this.data.persona.foto,
             idUsuario: this.userSession.id
         };
         return personaMap;
@@ -87,7 +85,8 @@ export class PersonaCrudDialogComponent implements OnInit {
             if (this.data.action === 'CREATE') {
                 this.crearPersona(this.personaMapData());
             } else if (this.data.action === 'UPDATE') {
-                this.editarPersona(this.data.persona.id, this.personaMapData());
+                this.data.persona.foto = (this.data.persona.foto).substring(Constantes.URIFILE.length),
+                    this.editarPersona(this.data.persona.id, this.personaMapData());
             } else if (this.data.action === 'DELETE') {
                 this.eliminarPersona(this.data.persona.id);
             }
@@ -177,4 +176,4 @@ export class PersonaCrudDialogComponent implements OnInit {
             duration: 8000,
         });
     }
-} 
+}

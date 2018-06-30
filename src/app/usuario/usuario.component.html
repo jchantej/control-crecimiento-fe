@@ -11,7 +11,7 @@
                   <mat-card-title>Usuario</mat-card-title>
                   <mat-card-subtitle>{{this.usuario.username}}</mat-card-subtitle>
                 </mat-card-header>
-                <img mat-card-image [src]="this.usuario.foto" height="350" alt="Perfil">
+                <img mat-card-image [src]="this.usuario.foto" height="150" alt="Perfil">
                 <div *ngIf="currentFileUpload" class="progress">
                   <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
                     aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
@@ -64,7 +64,7 @@
                   <mat-error>Debe ingresar un usuario</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                  <input class="form-control" formControlName="password" matInput placeholder="Contraseña" type="password" required>
+                  <input class="form-control" formControlName="password" matInput placeholder="Contraseña" type="password" required readonly>
                   <mat-error>debe ingresar una contraseña</mat-error>
                 </mat-form-field>
 

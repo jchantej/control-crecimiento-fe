@@ -1,0 +1,12 @@
+.example-container {
+    text-align: center;
+    padding: 2%;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+
+  .controles{
+    color: rgb(63, 81, 181);
+  }
