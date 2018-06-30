@@ -1,11 +1,11 @@
-<mat-toolbar color="primary">
-  <span>PFM | </span>
+<mat-toolbar color="primary" class=" mat-elevation-z7">
+  <span>MIW-PFM | </span>
   <div fxLayout="row" fxLayoutAlign="end">
-    <a *ngIf="loginIn" mat-button [routerLink]="['/control']">
+    <a *ngIf="loginIn" mat-button [routerLink]="['/control']"  routerLinkActive="active">
       <mat-icon>timeline</mat-icon>
       <span>Controles</span>
     </a>
-    <a *ngIf="loginIn" mat-button [routerLink]="['/persona']">
+    <a *ngIf="loginIn" mat-button [routerLink]="['/persona']"  routerLinkActive="active">
       <mat-icon>child_care</mat-icon>
       <span>Mis Nin@s</span>
     </a>
@@ -27,4 +27,3 @@
     </button>
   </mat-menu>
 </mat-toolbar>
-<br>

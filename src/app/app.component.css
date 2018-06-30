@@ -3,3 +3,11 @@
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
   }
+
+  .spacer {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    text-align: right !important;
+    color: rgb(95, 98, 100);
+}
